@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find your MP | Don't Divide Us</title>
+<link rel="icon" href="assets/ddu-logo-transparent.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Public+Sans:wght@400;500;600;700;800&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ddu.css">
+<style>
+  .lookup { max-width: 560px; margin: 0 auto; }
+  .lookup-row { display: flex; gap: 10px; }
+  .lookup-row input { flex: 1; font: inherit; font-size: 20px; font-weight: 700; letter-spacing: 0.1em; padding: 14px 18px; border: 2px solid var(--line-strong); border-radius: var(--radius); text-align: center; }
+  .lookup-row input:focus { outline: 2px solid var(--navy); border-color: var(--navy); }
+  .mp-card { margin-top: 32px; overflow: hidden; }
+  .mp-card__head { background: var(--navy); color: #fff; padding: 22px 26px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .mp-card__head .seatname { font-family: var(--font-display); font-size: 28px; text-transform: uppercase; }
+  .mp-card__body { padding: 26px; }
+  .vote-pill { font-weight: 800; padding: 5px 14px; border-radius: 99px; font-size: 13.5px; }
+  .vote-yes { background: #f7e3e4; color: var(--red); }
+  .vote-no { background: #e0f0e7; color: var(--ok); }
+  .tpl-tabs { display: flex; gap: 8px; margin: 18px 0 12px 0; }
+  .tpl-box { width: 100%; min-height: 170px; font: inherit; font-size: 15px; padding: 14px; border: 1.5px solid var(--line-strong); border-radius: var(--radius); resize: vertical; }
+  .step-note { font-size: 13.5px; color: var(--ink-soft); }
+</style>
+</head>
+<body data-page="your-mp">
+<header data-ddu-header></header>
+
+<main id="main">
+  <section class="page-hero" data-screen-label="Your MP hero">
+    <div class="container" style="text-align:center">
+      <p class="eyebrow">Constituent pressure works</p>
+      <h1 class="display display--skew">Find your MP</h1>
+      <p class="lede" style="margin-left:auto; margin-right:auto">Enter your postcode to see who represents you, how they voted on the Statewide Treaty Bill — and send them a letter from your own email in under two minutes.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="lookup" data-screen-label="Postcode lookup">
+        <form id="pcForm">
+          <div class="lookup-row">
+            <label for="pc" style="position:absolute; left:-9999px">Postcode</label>
+            <input id="pc" type="text" inputmode="numeric" maxlength="4" placeholder="e.g. 3150" autocomplete="postal-code">
+            <button class="btn btn--red btn--lg" type="submit">Look up</button>
+          </div>
+          <p class="step-note" style="text-align:center; margin-top:10px">Demo dataset — try 3150, 3810, 3915, 3128 or 3121. Production uses the full VEC postcode table.</p>
+        </form>
+
+        <div id="noResult" class="card card--pad" style="display:none; margin-top:24px; text-align:center">
+          <strong>We don't have that postcode in the demo set.</strong>
+          <p style="margin:6px 0 0 0; font-size:14.5px; color:var(--ink-soft)">Try 3150, 3810, 3915, 3128 or 3121 — or check the <a href="marginals.html">marginal seats list</a>.</p>
+        </div>
+      </div>
+
+      <div class="mp-card card" id="mpCard" style="display:none" data-screen-label="MP result">
+        <div class="mp-card__head">
+          <div>
+            <div style="font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--sand)">District of</div>
+            <div class="seatname" id="rSeat">—</div>
+          </div>
+          <div style="margin-left:auto; text-align:right">
+            <div id="rMp" style="font-weight:800; font-size:18px">—</div>
+            <div id="rParty" style="font-size:13.5px; opacity:0.8">—</div>
+          </div>
+        </div>
+        <div class="mp-card__body">
+          <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:6px">
+            <strong>Vote on the Statewide Treaty Bill:</strong>
+            <span class="vote-pill" id="rVote">—</span>
+            <span class="step-note">Assembly division, 16 Oct 2025 · <a href="#">Hansard</a></span>
+          </div>
+          <div style="display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-bottom:18px">
+            <strong>2022 margin:</strong> <span id="rMargin">—</span>
+            <span class="step-note">· <span id="rPledges">—</span> pledges in this district so far</span>
+          </div>
+
+          <h3 style="font-size:18px; margin-bottom:4px">Write to them — in your words</h3>
+          <p class="step-note">Pick a length, edit it so it sounds like you, then send from your own mail app. Personal letters get read; form letters get filtered.</p>
+          <div class="tpl-tabs chip-row">
+            <button class="chip active" type="button" data-tpl="one">One-liner</button>
+            <button class="chip" type="button" data-tpl="para">Paragraph</button>
+            <button class="chip" type="button" data-tpl="full">Full letter</button>
+          </div>
+          <textarea class="tpl-box" id="tplBox" aria-label="Letter text"></textarea>
+          <div style="display:flex; gap:10px; margin-top:14px; flex-wrap:wrap; align-items:center">
+            <a class="btn btn--navy" id="mailtoBtn" href="#">Open in your mail app</a>
+            <button class="btn btn--ghost" type="button" id="copyBtn">Copy text</button>
+            <label class="checkline" style="margin:0 0 0 auto"><input type="checkbox" id="crmConsent" checked> Keep me posted on actions in my seat</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer data-ddu-footer></footer>
+<script src="js/electorates.js"></script>
+<script src="js/site.js"></script>
+<script>
+(function () {
+  var cur = null;
+  var TPLS = {
+    one: function (s) { return "Dear " + s.mp + ",\n\nI'm a voter in " + s.seat + ". Please support the repeal of the Statewide Treaty Act 2025 — every Victorian should stand equal before the law.\n\n[Your name]\n[Your suburb]"; },
+    para: function (s) { return "Dear " + s.mp + ",\n\nI live in " + s.seat + " and I'll be voting in November. The Statewide Treaty Act 2025 creates a separate electoral roll, a permanent representative body, and statutory access to ministers for one group of Victorians only. Whatever the intent, that is not equal citizenship, and Victorians were never asked. I'm writing to ask you to publicly support repeal.\n\n[Your name]\n[Your suburb]"; },
+    full: function (s) { return "Dear " + s.mp + ",\n\nI'm writing as a constituent in " + s.seat + ".\n\nI hold a simple conviction: every Victorian should stand equal before the law. The Statewide Treaty Act 2025 departs from that principle — not in rhetoric but in statute. It maintains a second electoral roll (Part 3), establishes Gellung Warl as a permanent body with decision-making powers (Part 4), requires every future Bill to carry a treaty-compatibility statement (cl 66), and obliges ministers to attend representation meetings (Part 8). No other Victorian community holds these rights.\n\nDisadvantage deserves a serious response — through programs and services delivered under equal laws, not parallel civic institutions defined by ancestry.\n\nAt the November election my vote will follow this issue. I ask you to state your position on repeal plainly, and I would welcome your reply.\n\nYours sincerely,\n[Your name]\n[Your address]"; }
+  };
+
+  var form = document.getElementById("pcForm");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var s = window.DDU_FIND_SEAT(document.getElementById("pc").value);
+    document.getElementById("noResult").style.display = s ? "none" : "block";
+    document.getElementById("mpCard").style.display = s ? "block" : "none";
+    if (!s) return;
+    cur = s;
+    document.getElementById("rSeat").textContent = s.seat;
+    document.getElementById("rMp").textContent = s.mp;
+    document.getElementById("rParty").textContent = { ALP: "Australian Labor Party", LIB: "Liberal Party", NAT: "The Nationals" }[s.party] || s.party;
+    var v = document.getElementById("rVote");
+    v.textContent = s.vote === "Yes" ? "Voted YES — for the Act" : "Voted NO — against the Act";
+    v.className = "vote-pill " + (s.vote === "Yes" ? "vote-yes" : "vote-no");
+    document.getElementById("rMargin").textContent = s.margin.toFixed(1) + "%";
+    document.getElementById("rPledges").textContent = s.pledges;
+    setTpl("one");
+    document.getElementById("mpCard").scrollTop;
+  });
+
+  function setTpl(k) {
+    document.querySelectorAll("[data-tpl]").forEach(function (c) { c.classList.toggle("active", c.getAttribute("data-tpl") === k); });
+    var txt = TPLS[k](cur);
+    document.getElementById("tplBox").value = txt;
+    updateMailto();
+  }
+  function updateMailto() {
+    var body = document.getElementById("tplBox").value;
+    document.getElementById("mailtoBtn").href = "mailto:?subject=" + encodeURIComponent("From a constituent in " + (cur ? cur.seat : "")) + "&body=" + encodeURIComponent(body);
+  }
+  document.querySelectorAll("[data-tpl]").forEach(function (c) {
+    c.addEventListener("click", function () { if (cur) setTpl(c.getAttribute("data-tpl")); });
+  });
+  document.getElementById("tplBox").addEventListener("input", updateMailto);
+  document.getElementById("copyBtn").addEventListener("click", function () {
+    if (navigator.clipboard) navigator.clipboard.writeText(document.getElementById("tplBox").value);
+    this.textContent = "Copied ✓";
+    var b = this; setTimeout(function () { b.textContent = "Copy text"; }, 1600);
+  });
+})();
+</script>
+</body>
+</html>

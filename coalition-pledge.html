@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coalition repeal pledge tracker | Don't Divide Us</title>
+<link rel="icon" href="assets/ddu-logo-transparent.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Public+Sans:wght@400;500;600;700;800&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ddu.css">
+<style>
+  .status-track { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin: 30px 0 10px 0; }
+  .status-step { text-align: center; position: relative; padding-top: 30px; font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+  .status-step::before { content: ""; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 3px solid var(--line-strong); z-index: 2; }
+  .status-step::after { content: ""; position: absolute; top: 16px; left: -50%; width: 100%; height: 3px; background: var(--line-strong); }
+  .status-step:first-child::after { display: none; }
+  .status-step.done { color: var(--navy); }
+  .status-step.done::before { border-color: var(--navy); background: var(--navy); }
+  .status-step.done::after { background: var(--navy); }
+  .status-step.now { color: var(--red); }
+  .status-step.now::before { border-color: var(--red); background: #fff; }
+  .record { padding: 24px 26px; margin-bottom: 14px; }
+  .record .r-top { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; margin-bottom: 8px; }
+  .record .r-date { font-size: 12.5px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); }
+  .record blockquote { margin: 0 0 10px 0; font-family: var(--font-serif); font-style: italic; font-size: 18px; color: #2c3548; }
+</style>
+</head>
+<body data-page="coalition-pledge">
+<header data-ddu-header></header>
+
+<main id="main">
+  <section class="page-hero page-hero--red" data-screen-label="Pledge tracker hero">
+    <div class="container">
+      <p class="eyebrow">Statement of record</p>
+      <h1 class="display display--skew">The Coalition pledge tracker</h1>
+      <p class="lede">The Liberal–National Coalition has promised, in public and in writing, to repeal the Statewide Treaty Act. This page holds that promise to the record — before the election, and after it, whoever wins.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow">
+
+      <div class="card card--pad" data-screen-label="Pledge status">
+        <p class="eyebrow" style="margin-bottom:0">Current status</p>
+        <div class="status-track">
+          <div class="status-step done">Commitment<br>made</div>
+          <div class="status-step now">Pre-election<br>commitment held</div>
+          <div class="status-step">In<br>office</div>
+          <div class="status-step">Legislation<br>tabled</div>
+          <div class="status-step">Act<br>repealed</div>
+        </div>
+        <p style="font-size:14px; color:var(--ink-soft); margin:18px 0 0 0">Status updates are made by campaign staff with a dated note and source. Last updated: 9 June 2026.</p>
+      </div>
+
+      <h2 class="display" style="font-size:30px; margin:48px 0 22px 0">Every public commitment, logged</h2>
+
+      <article class="card record">
+        <div class="r-top"><span class="r-date">Oct 2025</span><span class="badge badge--navy">Leader of the Opposition</span><span class="review-flag">⚠ exact quote &amp; link pending verification</span></div>
+        <blockquote>"[Verbatim repeal commitment made after the Bill passed the Legislative Council — full quote, speaker and outlet to be inserted from the primary source.]"</blockquote>
+        <p class="source-links">Speaker: [Name, role] · Source: [outlet, date, link] · Context: response to passage of the Bill, 30 Oct 2025</p>
+      </article>
+
+      <article class="card record">
+        <div class="r-top"><span class="r-date">May 2026</span><span class="badge badge--navy">Shadow Cabinet</span><span class="review-flag">⚠ pending verification</span></div>
+        <blockquote>"[Verbatim restatement that repeal will be in the Coalition's November 2026 platform.]"</blockquote>
+        <p class="source-links">Speaker: [Name, role] · Source: [outlet, date, link]</p>
+      </article>
+
+      <h2 class="display" style="font-size:30px; margin:48px 0 22px 0">Timeline</h2>
+      <ul class="timeline" data-screen-label="Pledge timeline">
+        <li class="tl-red"><span class="tl-date">Jan 2024</span><h3>Coalition withdraws from the treaty process</h3><p>The Victorian Liberals and Nationals end bipartisan support for treaty negotiations, citing the referendum result.</p></li>
+        <li><span class="tl-date">9 Sep 2025</span><h3>Statewide Treaty Bill introduced</h3><p>Premier introduces the Bill to the Legislative Assembly.</p></li>
+        <li><span class="tl-date">16 Oct 2025</span><h3>Coalition votes against in the Assembly</h3><p>The Bill passes after a 13-hour overnight sitting; every Coalition MP votes No. Vote recorded per member on <a href="your-mp.html">Find your MP</a>.</p></li>
+        <li><span class="tl-date">30 Oct 2025</span><h3>Coalition votes against in the Council; Bill passes</h3><p>The Bill clears the upper house with crossbench support. Repeal commitment follows.</p></li>
+        <li class="tl-red"><span class="tl-date">1 May 2026</span><h3>Gellung Warl established</h3><p>The Act's central body begins operating with statutory powers.</p></li>
+        <li><span class="tl-date">28 Nov 2026</span><h3>Victorian state election</h3><p>The first opportunity for Victorians to vote on the Act — <span data-countdown-days>—</span> days away.</p></li>
+      </ul>
+
+      <div class="card card--pad" style="background:var(--navy); color:#fff; border:0; margin-top:40px">
+        <strong style="font-size:18px">A promise logged is a promise kept — or a promise broken in public.</strong>
+        <p style="color:rgba(255,255,255,0.78); margin:8px 0 18px 0">If the Coalition wins and wavers, this page becomes the campaign. Help us hold the line either way.</p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap">
+          <a class="btn btn--red" href="pledge.html">Sign the pledge</a>
+          <a class="btn btn--ghost-light" href="your-mp.html">See how your MP voted</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer data-ddu-footer></footer>
+<script src="js/site.js"></script>
+</body>
+</html>

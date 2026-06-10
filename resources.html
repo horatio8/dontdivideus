@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resources — the organising toolkit | Don't Divide Us</title>
+<link rel="icon" href="assets/ddu-logo-transparent.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Public+Sans:wght@400;500;600;700;800&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ddu.css">
+<style>
+  .res { padding: 26px; display: flex; flex-direction: column; gap: 10px; }
+  .res .thumb { aspect-ratio: 16/10; margin-bottom: 6px; }
+  .res h3 { font-size: 18px; }
+  .res p { font-size: 14.5px; color: var(--ink-soft); margin: 0; }
+  .res .row { display: flex; gap: 8px; margin-top: auto; padding-top: 12px; align-items: center; }
+  .gate-note { font-size: 12.5px; color: var(--ink-soft); }
+</style>
+</head>
+<body data-page="resources">
+<header data-ddu-header></header>
+
+<main id="main">
+  <section class="page-hero" data-screen-label="Resources hero">
+    <div class="container">
+      <p class="eyebrow">The organising toolkit</p>
+      <h1 class="display display--skew">Resources</h1>
+      <p class="lede">Everything you need to run the conversation in your own street, club or group chat. Free to download — leave an email if you want updates, or skip straight to the file.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid--3">
+
+        <div class="card res" data-screen-label="Poster pack">
+          <div class="placeholder-media thumb">Poster pack preview — 4 designs</div>
+          <h3>Poster pack</h3>
+          <p>Four A3/A4 designs: Equal Before the Law, Two Victorias, One Roll One Vote, and the brand mark. Print at home or at any officeworks.</p>
+          <div class="row">
+            <button class="btn btn--navy btn--sm" type="button" data-dl>Download bundle</button>
+            <span class="gate-note">.zip · 18MB</span>
+          </div>
+        </div>
+
+        <div class="card res">
+          <div class="placeholder-media thumb">Conversation guide cover</div>
+          <h3>Conversation guide</h3>
+          <p>How to talk about the Act with family, friends and colleagues — calm, sourced, and without a single insult. Ten pages.</p>
+          <div class="row"><button class="btn btn--navy btn--sm" type="button" data-dl>Download PDF</button></div>
+        </div>
+
+        <div class="card res">
+          <div class="placeholder-media thumb">Letter templates</div>
+          <h3>MP letter templates</h3>
+          <p>Short, medium and full letters — the same ones in the <a href="your-mp.html">Find your MP</a> tool, as editable documents.</p>
+          <div class="row"><button class="btn btn--navy btn--sm" type="button" data-dl>Download .docx</button></div>
+        </div>
+
+        <div class="card res">
+          <div class="placeholder-media thumb">Letters to the editor guide</div>
+          <h3>Letters to the Editor</h3>
+          <p>Guide and templates tuned per publication — Herald Sun, The Age, regional mastheads — with word limits and submission addresses.</p>
+          <div class="row"><button class="btn btn--navy btn--sm" type="button" data-dl>Download PDF</button></div>
+        </div>
+
+        <div class="card res">
+          <div class="placeholder-media thumb">Myth vs fact one-pager</div>
+          <h3>Myth versus fact</h3>
+          <p>One page, both sides of the argument, every line footnoted to <a href="the-act.html">the Act</a>. The thing to leave on the kitchen table.</p>
+          <div class="row"><button class="btn btn--navy btn--sm" type="button" data-dl>Download PDF</button></div>
+        </div>
+
+        <div class="card res">
+          <div class="placeholder-media thumb">Social tile set — 1080×1080 and more</div>
+          <h3>Social tiles</h3>
+          <p>Instagram square, Facebook landscape, X portrait, LinkedIn landscape — one set per row of <a href="two-victorias.html">Two Victorias</a>, authoriser line baked in.</p>
+          <div class="row">
+            <a class="btn btn--navy btn--sm" href="two-victorias.html">Generate from a row</a>
+          </div>
+        </div>
+
+        <div class="card res">
+          <div class="placeholder-media thumb">Yard sign</div>
+          <h3>Yard sign request</h3>
+          <p>Corflute signs for fences and front yards in target seats. We deliver in batches by electorate.</p>
+          <div class="row"><button class="btn btn--navy btn--sm" type="button" id="yardBtn">Request a sign</button></div>
+        </div>
+
+        <div class="card res">
+          <div class="placeholder-media thumb">Training video library</div>
+          <h3>Volunteer training videos</h3>
+          <p>Doorstep conversations, phone banking and polling-day basics. Coming in Phase 3.</p>
+          <div class="row"><span class="badge badge--gray">Coming soon</span></div>
+        </div>
+
+      </div>
+
+      <div class="card card--pad" style="margin-top:34px; display:flex; gap:16px; align-items:center; flex-wrap:wrap" id="gate" data-screen-label="Email gate">
+        <div style="flex:1; min-width:260px">
+          <strong>Want the updated packs as we release them?</strong>
+          <p style="margin:4px 0 0 0; font-size:14px; color:var(--ink-soft)">Optional. Every download above also works without an email — public resources should be public.</p>
+        </div>
+        <form style="display:flex; gap:8px; flex:1; min-width:280px" data-newsletter>
+          <input type="email" placeholder="Your email" required style="flex:1; font:inherit; font-size:14.5px; padding:10px 13px; border:1.5px solid var(--line-strong); border-radius:6px">
+          <button class="btn btn--red" type="submit">Keep me posted</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer data-ddu-footer></footer>
+<script src="js/site.js"></script>
+<script>
+  document.querySelectorAll("[data-dl]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      b.textContent = "Download started ✓";
+      setTimeout(function () { b.textContent = b.textContent.replace(" started ✓", ""); }, 2200);
+    });
+  });
+  document.getElementById("yardBtn").addEventListener("click", function () {
+    this.outerHTML = '<span class="gate-note">Request form opens in production — name, address, electorate, sign size.</span>';
+  });
+</script>
+</body>
+</html>

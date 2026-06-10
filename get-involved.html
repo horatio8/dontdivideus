@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get involved | Don't Divide Us</title>
+<link rel="icon" href="assets/ddu-logo-transparent.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Public+Sans:wght@400;500;600;700;800&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ddu.css">
+<style>
+  .action-card { padding: 30px; display: flex; flex-direction: column; gap: 10px; }
+  .action-card .num { font-family: var(--font-display); font-size: 38px; color: var(--sand); line-height: 1; }
+  .action-card h3 { font-size: 21px; }
+  .action-card p { font-size: 15px; color: var(--ink-soft); margin: 0; }
+  .action-card .btn { margin-top: auto; align-self: flex-start; }
+  .event { display: flex; gap: 18px; padding: 20px 24px; align-items: center; }
+  .event .dt { text-align: center; background: var(--navy); color: #fff; border-radius: 8px; padding: 10px 14px; min-width: 72px; }
+  .event .dt .d { font-family: var(--font-display); font-size: 24px; line-height: 1; }
+  .event .dt .m { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sand); }
+  .event h4 { margin: 0 0 3px 0; font-size: 17px; }
+  .event p { margin: 0; font-size: 14px; color: var(--ink-soft); }
+  .toc-steps { counter-reset: s; list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .toc-steps li { counter-increment: s; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 22px; }
+  .toc-steps li::before { content: counter(s, decimal-leading-zero); font-family: var(--font-display); font-size: 30px; color: var(--sand); display: block; margin-bottom: 8px; }
+  .toc-steps h3 { font-size: 18px; margin-bottom: 6px; }
+  .toc-steps p { font-size: 14px; color: rgba(255,255,255,0.75); margin: 0; }
+  @media (max-width: 900px) { .toc-steps { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body data-page="get-involved">
+<header data-ddu-header></header>
+
+<main id="main">
+  <section class="page-hero" data-screen-label="Get involved hero">
+    <div class="container">
+      <p class="eyebrow">The action hub</p>
+      <h1 class="display display--skew">Get involved</h1>
+      <p class="lede">Four ways to help, in rising order of commitment. Most people start with the pledge. The ones who win elections host the events.</p>
+    </div>
+  </section>
+
+  <section class="section" data-screen-label="Action cards">
+    <div class="container">
+      <div class="grid grid--4">
+        <div class="card action-card">
+          <span class="num">01</span>
+          <h3>Sign the pledge</h3>
+          <p>Thirty seconds. Your postcode tells us which seat your voice counts in most.</p>
+          <a class="btn btn--red" href="pledge.html">Sign now</a>
+        </div>
+        <div class="card action-card">
+          <span class="num">02</span>
+          <h3>Find an event</h3>
+          <p>Town halls, street stalls and training nights, listed by region.</p>
+          <a class="btn btn--navy" href="#events">See events</a>
+        </div>
+        <div class="card action-card">
+          <span class="num">03</span>
+          <h3>Host an event</h3>
+          <p>A lounge room and six neighbours is an event. We approve listings and send a kit.</p>
+          <a class="btn btn--navy" href="#host">Host one</a>
+        </div>
+        <div class="card action-card">
+          <span class="num">04</span>
+          <h3>Volunteer</h3>
+          <p>Doorknocking, phone banks and polling-day roles — routed to the seats that decide it.</p>
+          <a class="btn btn--navy" href="marginals.html">Volunteer</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper section--tight" id="events" data-screen-label="Events">
+    <div class="container" style="display:grid; grid-template-columns: 1fr 1fr; gap:40px; align-items:start">
+      <div>
+        <h2 class="display" style="font-size:28px; margin-bottom:18px">Upcoming events</h2>
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <div class="card event">
+            <div class="dt"><div class="d">18</div><div class="m">Jun</div></div>
+            <div><h4>Equal Before the Law — town hall, Glen Waverley</h4><p>Wheelers Hill Community Centre · 7:00pm · Q&amp;A with campaign spokespeople</p></div>
+            <a class="btn btn--ghost btn--sm" style="margin-left:auto" href="#" onclick="this.textContent='RSVP\u2019d \u2713'; return false;">RSVP</a>
+          </div>
+          <div class="card event">
+            <div class="dt"><div class="d">27</div><div class="m">Jun</div></div>
+            <div><h4>Street stall &amp; pledge drive, Pakenham Market</h4><p>Main St Pakenham · 9:00am–1:00pm · materials provided</p></div>
+            <a class="btn btn--ghost btn--sm" style="margin-left:auto" href="#" onclick="this.textContent='RSVP\u2019d \u2713'; return false;">RSVP</a>
+          </div>
+          <div class="card event">
+            <div class="dt"><div class="d">09</div><div class="m">Jul</div></div>
+            <div><h4>Volunteer training night (online)</h4><p>Zoom · 6:30pm · how to run a pledge conversation</p></div>
+            <a class="btn btn--ghost btn--sm" style="margin-left:auto" href="#" onclick="this.textContent='RSVP\u2019d \u2713'; return false;">RSVP</a>
+          </div>
+        </div>
+        <p class="source-links" style="margin-top:14px">List + map view in production, fed from the CRM events module.</p>
+      </div>
+
+      <div class="card card--pad" id="host">
+        <h2 class="display" style="font-size:28px; margin-bottom:6px">Host an event</h2>
+        <p style="font-size:14.5px; color:var(--ink-soft)">Submissions are reviewed by the campaign before public listing.</p>
+        <form id="hostForm">
+          <div class="grid grid--2" style="gap:0 16px">
+            <div class="field"><label for="hName">Your name</label><input id="hName" type="text" required></div>
+            <div class="field"><label for="hEmail">Email</label><input id="hEmail" type="email" required></div>
+          </div>
+          <div class="field"><label for="hType">Event type</label>
+            <select id="hType">
+              <option>Lounge-room conversation</option>
+              <option>Street stall</option>
+              <option>Town hall</option>
+              <option>Letter-writing night</option>
+            </select>
+          </div>
+          <div class="grid grid--2" style="gap:0 16px">
+            <div class="field"><label for="hSuburb">Suburb</label><input id="hSuburb" type="text"></div>
+            <div class="field"><label for="hDate">Proposed date</label><input id="hDate" type="text" placeholder="e.g. Sat 18 July"></div>
+          </div>
+          <button class="btn btn--red btn--block" type="submit">Submit for approval</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--navy" data-screen-label="Theory of change">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow eyebrow--sand">The theory of change</p>
+        <h2 class="display">How this actually wins</h2>
+        <p class="lede">No mystery, no hashtags. Four steps, repeated in twelve seats until November.</p>
+      </div>
+      <ol class="toc-steps">
+        <li><h3>Sign</h3><p>A pledge with a postcode becomes pressure in a specific seat — visible to its MP.</p></li>
+        <li><h3>Share</h3><p>Two Victorias cards travel further than any ad budget. One share reaches the persuadable.</p></li>
+        <li><h3>Recruit</h3><p>Each pledger who brings three friends doubles the list every month it matters.</p></li>
+        <li><h3>Vote</h3><p>November 28. The election Victorians were never given on this Act.</p></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer data-ddu-footer></footer>
+<script src="js/site.js"></script>
+<script>
+  document.getElementById("hostForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    this.innerHTML = '<div style="text-align:center; padding:18px 0"><strong style="font-size:17px">Submitted for review.</strong><p style="font-size:14.5px; color:var(--ink-soft); margin:8px 0 0 0">We aim to approve listings within 3 business days and will email you a host kit.</p></div>';
+  });
+</script>
+</body>
+</html>

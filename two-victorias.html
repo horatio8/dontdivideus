@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Two Victorias — side-by-side rights under the Treaty Act | Don't Divide Us</title>
+<link rel="icon" href="assets/ddu-logo-transparent.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Public+Sans:wght@400;500;600;700;800&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ddu.css">
+<style>
+  .tv-toolbar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin: 34px 0 22px 0; }
+  .tv-toolbar .share-view { margin-left: auto; }
+
+  .tv-table { border-radius: 12px; overflow: hidden; }
+  .tv-cols-head { display: grid; grid-template-columns: 1fr 1fr; position: sticky; top: 64px; z-index: 5; }
+  .tv-cols-head > div {
+    padding: 16px 24px; color: #fff;
+    font-family: var(--font-display); text-transform: uppercase; font-size: 20px; letter-spacing: 0.03em;
+  }
+  .tv-cols-head .ca { background: var(--navy); }
+  .tv-cols-head .cb { background: var(--red); }
+  .tv-cols-head small { display: block; font-family: var(--font-body); font-size: 12.5px; font-weight: 600; text-transform: none; letter-spacing: 0; opacity: 0.75; margin-top: 2px; }
+
+  .tv-row { border-top: 1px solid var(--line); background: #fff; }
+  .tv-row[hidden] { display: none; }
+  .tv-row__main {
+    display: grid; grid-template-columns: 1fr 1fr;
+    width: 100%; text-align: left; font: inherit; border: 0; background: none; padding: 0; cursor: pointer;
+  }
+  .tv-row__main:hover .cell { background: var(--cream); }
+  .tv-row .cell { padding: 22px 24px; font-size: 15.5px; line-height: 1.55; transition: background 0.12s; }
+  .tv-row .cell-b { background: #fbf5f5; border-left: 1px solid var(--line); }
+  .tv-row__main:hover .cell-b { background: #f6eaea; }
+  .tv-row .row-label { display: flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); margin-bottom: 8px; }
+  .tv-row .row-label .badge { letter-spacing: 0.06em; }
+  .tv-row .expander { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .tv-row.open .expander .chev { display: inline-block; transform: rotate(180deg); }
+
+  .tv-row__detail { display: none; border-top: 1px dashed var(--line-strong); background: var(--cream); padding: 24px; }
+  .tv-row.open .tv-row__detail { display: grid; grid-template-columns: 1.4fr 1fr; gap: 24px; }
+  .tv-row__detail .gov-says { align-self: start; }
+  .detail-meta { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 6px; }
+  .detail-actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+
+  @media (max-width: 760px) {
+    .tv-cols-head { position: static; }
+    .tv-row__main { grid-template-columns: 1fr; }
+    .tv-row .cell-b { border-left: 0; border-top: 1px dashed var(--line); }
+    .tv-row.open .tv-row__detail { grid-template-columns: 1fr; }
+  }
+
+  /* share modal */
+  .share-modal {
+    position: fixed; inset: 0; z-index: 90; display: none;
+    align-items: center; justify-content: center; padding: 24px;
+    background: rgba(15, 34, 56, 0.66);
+  }
+  .share-modal.open { display: flex; }
+  .share-modal__card {
+    background: #fff; border-radius: 14px; max-width: 880px; width: 100%;
+    display: grid; grid-template-columns: minmax(0, 420px) 1fr; overflow: hidden;
+    max-height: 90vh;
+  }
+  .share-modal__preview { background: var(--cream); padding: 26px; display: flex; align-items: center; justify-content: center; }
+  .share-modal__preview canvas { width: 100%; max-width: 380px; height: auto; border-radius: 6px; box-shadow: var(--shadow-card); }
+  .share-modal__body { padding: 28px; overflow: auto; }
+  .share-modal__body h3 { font-size: 22px; margin-bottom: 8px; }
+  .share-targets { display: flex; flex-wrap: wrap; gap: 9px; margin: 16px 0; }
+  @media (max-width: 760px) { .share-modal__card { grid-template-columns: 1fr; } }
+
+  .tv-footer-ribbon { background: var(--navy); color: #fff; }
+  .tv-footer-ribbon .inner { max-width: var(--maxw); margin: 0 auto; padding: 30px 24px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+</style>
+</head>
+<body data-page="two-victorias">
+<header data-ddu-header></header>
+
+<main id="main">
+  <section class="page-hero page-hero--red" data-screen-label="Two Victorias hero">
+    <div class="container">
+      <p class="eyebrow">The signature comparison</p>
+      <h1 class="display display--skew">Two Victorias</h1>
+      <p class="lede">Ten statutory rights and powers that now differ depending on which Victoria you belong to. Each row is sourced to a clause of the Statewide Treaty Act 2025, with the government's response published alongside ours. Click any row to read the detail.</p>
+    </div>
+  </section>
+
+  <section class="section section--tight" data-screen-label="Two Victorias table">
+    <div class="container">
+
+      <div class="tv-toolbar">
+        <div class="chip-row" id="tvFilters" role="group" aria-label="Filter by domain"></div>
+        <button class="btn btn--ghost btn--sm share-view" id="shareView" type="button">Copy link to this view</button>
+      </div>
+
+      <div class="card tv-table">
+        <div class="tv-cols-head">
+          <div class="ca">Victorian — general<small>Rights under ordinary Victorian law</small></div>
+          <div class="cb">Victorian — First Peoples<small>Additional rights and bodies created by the Act</small></div>
+        </div>
+        <div id="tvRows"></div>
+      </div>
+
+      <div class="card card--pad" id="sources" style="margin-top:28px">
+        <p class="eyebrow" style="margin-bottom:8px">Sources</p>
+        <p class="source-links" style="margin:0">
+          Primary sources: <a href="https://www.legislation.vic.gov.au" target="_blank" rel="noopener">Statewide Treaty Act 2025 — legislation.vic.gov.au</a> ·
+          Legislative Assembly Hansard, 16 October 2025 · Legislative Council Hansard, 30 October 2025 ·
+          Statewide Treaty schedules · Victorian Budget papers.
+          Plain-English summaries are ours; verbatim pulls are quoted from the Act. Corrections: <a href="contact.html">contact us</a> — we publish all substantive corrections on the <a href="fact-check.html">fact-check tracker</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="tv-footer-ribbon" data-screen-label="Two Victorias donate ribbon">
+    <div class="inner">
+      <strong style="font-size:18px">Think every Victorian should live under one set of laws?</strong>
+      <span style="opacity:0.8">Help us put this comparison in front of every voter.</span>
+      <a class="btn btn--red" style="margin-left:auto" href="donate.html">Donate</a>
+      <a class="btn btn--ghost-light" href="pledge.html">Sign the pledge</a>
+    </div>
+  </div>
+</main>
+
+<!-- share card modal -->
+<div class="share-modal" id="shareModal" role="dialog" aria-modal="true" aria-label="Share this card">
+  <div class="share-modal__card">
+    <div class="share-modal__preview"><canvas id="shareCanvas" width="1080" height="1080"></canvas></div>
+    <div class="share-modal__body">
+      <p class="eyebrow" style="margin-bottom:6px">Share this card</p>
+      <h3 id="shareTitle">—</h3>
+      <p style="font-size:14.5px;color:var(--ink-soft)">A 1080×1080 tile with the row contents and our authoriser line — ready for Instagram, Facebook, X or LinkedIn.</p>
+      <div class="share-targets">
+        <button class="btn btn--navy btn--sm" type="button" id="downloadCard">Download PNG</button>
+        <button class="btn btn--ghost btn--sm" type="button" data-share="link">Copy link</button>
+        <button class="btn btn--ghost btn--sm" type="button" data-share="x">Share to X</button>
+        <button class="btn btn--ghost btn--sm" type="button" data-share="fb">Share to Facebook</button>
+      </div>
+      <p style="font-size:12.5px;color:var(--ink-soft);margin:0">Every shared tile carries the authoriser line, as required by the Electoral Act 2002 (Vic).</p>
+      <button class="btn btn--ghost btn--sm" type="button" id="closeShare" style="margin-top:18px">Close</button>
+    </div>
+  </div>
+</div>
+
+<footer data-ddu-footer></footer>
+
+<script src="js/two-victorias-data.js"></script>
+<script src="js/site.js"></script>
+<script>
+(function () {
+  var rowsHost = document.getElementById("tvRows");
+  var filterHost = document.getElementById("tvFilters");
+  var current = (location.hash || "#all").replace("#", "") || "all";
+  if (!window.TV_DOMAINS.some(function (d) { return d.key === current; })) current = "all";
+
+  // Build filter chips
+  window.TV_DOMAINS.forEach(function (d) {
+    var b = document.createElement("button");
+    b.className = "chip" + (d.key === current ? " active" : "");
+    b.type = "button";
+    b.textContent = d.label;
+    b.setAttribute("data-key", d.key);
+    b.addEventListener("click", function () {
+      current = d.key;
+      history.replaceState(null, "", d.key === "all" ? "#all" : "#" + d.key);
+      filterHost.querySelectorAll(".chip").forEach(function (c) { c.classList.remove("active"); });
+      b.classList.add("active");
+      applyFilter();
+    });
+    filterHost.appendChild(b);
+  });
+
+  var DOMAIN_LABEL = { lawmaking: "Lawmaking", identity: "Identity", land: "Land and water", culture: "Culture", funding: "Funding" };
+
+  // Build rows
+  window.TV_ROWS.forEach(function (r) {
+    var row = document.createElement("div");
+    row.className = "tv-row";
+    row.setAttribute("data-domain", r.domain);
+    row.setAttribute("data-id", r.id);
+    row.innerHTML =
+      '<button class="tv-row__main" type="button" aria-expanded="false">' +
+        '<span class="cell cell-a"><span class="row-label">' + r.label +
+          ' <span class="badge badge--navy">' + DOMAIN_LABEL[r.domain] + '</span>' +
+          (r.contested ? ' <span class="badge badge--warn">figures contested</span>' : '') +
+        '</span>' + r.general + '</span>' +
+        '<span class="cell cell-b"><span class="row-label">' + r.clause +
+          ' <span class="expander" style="margin-left:auto">Detail <span class="chev">▾</span></span></span>' + r.fp + '</span>' +
+      '</button>' +
+      '<div class="tv-row__detail">' +
+        '<div>' +
+          '<div class="detail-meta"><span class="badge badge--red">' + r.clause + '</span>' +
+            '<span class="source-links">' + r.source + '</span></div>' +
+          '<div class="clause-pull">' + r.pull + '<cite>' + r.clause + ', Statewide Treaty Act 2025</cite></div>' +
+          '<p style="font-size:15px; margin:0"><strong>In plain English:</strong> ' + r.fp + '</p>' +
+          '<div class="detail-actions">' +
+            '<button class="btn btn--navy btn--sm" type="button" data-share-row="' + r.id + '">Share this card</button>' +
+            '<a class="btn btn--ghost btn--sm" href="https://www.legislation.vic.gov.au" target="_blank" rel="noopener">Read the clause</a>' +
+          '</div>' +
+        '</div>' +
+        '<div class="gov-says"><span class="gs-label">⚖ Government says</span><p>' + r.gov + '</p></div>' +
+      '</div>';
+    rowsHost.appendChild(row);
+
+    row.querySelector(".tv-row__main").addEventListener("click", function () {
+      var open = row.classList.toggle("open");
+      row.querySelector(".tv-row__main").setAttribute("aria-expanded", String(open));
+    });
+  });
+
+  function applyFilter() {
+    rowsHost.querySelectorAll(".tv-row").forEach(function (row) {
+      var show = current === "all" || row.getAttribute("data-domain") === current;
+      if (show) { row.removeAttribute("hidden"); } else { row.setAttribute("hidden", ""); }
+    });
+  }
+  applyFilter();
+
+  // Share view link
+  document.getElementById("shareView").addEventListener("click", function () {
+    var url = location.href;
+    if (navigator.clipboard) { navigator.clipboard.writeText(url); }
+    this.textContent = "Link copied ✓";
+    var btn = this;
+    setTimeout(function () { btn.textContent = "Copy link to this view"; }, 1800);
+  });
+
+  // ---- Share card generator (1080×1080 canvas) ----
+  var modal = document.getElementById("shareModal");
+  var canvas = document.getElementById("shareCanvas");
+  var ctx = canvas.getContext("2d");
+  var currentRow = null;
+  var logoImg = new Image();
+  logoImg.src = "assets/ddu-logo-transparent.png";
+
+  function wrapText(text, x, y, maxW, lh, font, color) {
+    ctx.font = font; ctx.fillStyle = color;
+    var words = text.split(" "), line = "", yy = y;
+    for (var i = 0; i < words.length; i++) {
+      var test = line + words[i] + " ";
+      if (ctx.measureText(test).width > maxW && line) {
+        ctx.fillText(line.trim(), x, yy); line = words[i] + " "; yy += lh;
+      } else { line = test; }
+    }
+    ctx.fillText(line.trim(), x, yy);
+    return yy + lh;
+  }
+
+  function drawCard(r) {
+    ctx.clearRect(0, 0, 1080, 1080);
+    // background split
+    ctx.fillStyle = "#faf7ee"; ctx.fillRect(0, 0, 1080, 1080);
+    ctx.fillStyle = "#1e3a5c"; ctx.fillRect(0, 0, 1080, 150);
+    ctx.fillStyle = "#a6161e"; ctx.fillRect(0, 150, 1080, 12);
+    // header
+    ctx.fillStyle = "#e3d3a6";
+    ctx.font = "700 30px 'Public Sans', sans-serif";
+    ctx.fillText("TWO VICTORIAS", 60, 75);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "400 52px Anton, sans-serif";
+    ctx.fillText(r.label.toUpperCase(), 60, 130);
+    // columns
+    var colW = 450, leftX = 60, rightX = 575, topY = 250;
+    ctx.font = "800 26px 'Public Sans', sans-serif";
+    ctx.fillStyle = "#1e3a5c"; ctx.fillText("VICTORIAN — GENERAL", leftX, topY - 30);
+    ctx.fillStyle = "#a6161e"; ctx.fillText("VICTORIAN — FIRST PEOPLES", rightX, topY - 30);
+    ctx.strokeStyle = "#cfc5a4"; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(540, 230); ctx.lineTo(540, 860); ctx.stroke();
+    wrapText(r.general, leftX, topY + 14, colW, 44, "400 30px 'Public Sans', sans-serif", "#182236");
+    wrapText(r.fp, rightX, topY + 14, colW, 44, "400 30px 'Public Sans', sans-serif", "#182236");
+    // clause badge
+    ctx.fillStyle = "#e3d3a6"; ctx.fillRect(60, 880, 320, 56);
+    ctx.fillStyle = "#1e3a5c"; ctx.font = "800 26px 'Public Sans', sans-serif";
+    ctx.fillText(r.clause + " · STA 2025", 78, 917);
+    // logo
+    if (logoImg.complete) { ctx.drawImage(logoImg, 880, 850, 150, 150); }
+    // authoriser
+    ctx.fillStyle = "#1e3a5c"; ctx.fillRect(0, 990, 1080, 90);
+    ctx.fillStyle = "rgba(255,255,255,0.85)";
+    ctx.font = "600 22px 'Public Sans', sans-serif";
+    ctx.fillText("Authorised by [Authoriser name], Don't Divide Us, Melbourne · dontdivide.com.au", 60, 1043);
+  }
+
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest("[data-share-row]");
+    if (!t) return;
+    currentRow = window.TV_ROWS.find(function (x) { return x.id === t.getAttribute("data-share-row"); });
+    document.getElementById("shareTitle").textContent = currentRow.label;
+    modal.classList.add("open");
+    document.fonts.ready.then(function () { drawCard(currentRow); });
+    drawCard(currentRow);
+  });
+  document.getElementById("closeShare").addEventListener("click", function () { modal.classList.remove("open"); });
+  modal.addEventListener("click", function (e) { if (e.target === modal) modal.classList.remove("open"); });
+
+  document.getElementById("downloadCard").addEventListener("click", function () {
+    var a = document.createElement("a");
+    a.download = "two-victorias-" + currentRow.id + ".png";
+    a.href = canvas.toDataURL("image/png");
+    a.click();
+  });
+  document.querySelectorAll("[data-share]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var url = location.origin + location.pathname + "#" + (currentRow ? currentRow.domain : "all");
+      if (b.getAttribute("data-share") === "link" && navigator.clipboard) {
+        navigator.clipboard.writeText(url);
+        b.textContent = "Copied ✓"; setTimeout(function () { b.textContent = "Copy link"; }, 1600);
+      } else if (b.getAttribute("data-share") === "x") {
+        window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent("One state. Two sets of rules. " + url), "_blank");
+      } else if (b.getAttribute("data-share") === "fb") {
+        window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url), "_blank");
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>

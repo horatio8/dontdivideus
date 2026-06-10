@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donate | Don't Divide Us</title>
+<link rel="icon" href="assets/ddu-logo-transparent.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Public+Sans:wght@400;500;600;700;800&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ddu.css">
+<style>
+  .don-wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 56px; align-items: start; }
+  @media (max-width: 900px) { .don-wrap { grid-template-columns: 1fr; } }
+  .don-steps { display: flex; gap: 6px; margin-bottom: 22px; }
+  .don-steps span { flex: 1; height: 5px; border-radius: 3px; background: var(--line); }
+  .don-steps span.on { background: var(--red); }
+  .freq-toggle2 { display: grid; grid-template-columns: 1fr 1fr; border: 2px solid var(--line-strong); border-radius: 8px; overflow: hidden; margin-bottom: 16px; }
+  .freq-toggle2 button { font: inherit; font-weight: 800; font-size: 15px; padding: 13px; background: #fff; border: 0; cursor: pointer; color: var(--ink-soft); }
+  .freq-toggle2 button.sel { background: var(--navy); color: #fff; }
+  .amts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .amts button { font: inherit; font-weight: 800; font-size: 19px; padding: 17px; border-radius: 8px; border: 2px solid var(--line-strong); background: #fff; cursor: pointer; }
+  .amts button small { display: block; font-size: 12px; font-weight: 600; color: var(--ink-soft); margin-top: 3px; }
+  .amts button.sel { border-color: var(--red); background: #fdf3f3; color: var(--red); }
+  .amts button.sel small { color: var(--red); }
+  .summary { background: var(--cream); border: 1px solid var(--line); border-radius: 8px; padding: 16px 18px; font-size: 15px; margin: 16px 0; }
+  .summary .line { display: flex; justify-content: space-between; padding: 3px 0; }
+  .summary .line.total { border-top: 1px solid var(--line-strong); margin-top: 8px; padding-top: 10px; font-weight: 800; font-size: 17px; }
+  .attest { background: #f0f3f7; border: 1px solid #d6deea; border-radius: 8px; padding: 16px 18px; margin: 16px 0; }
+  .stripe-note { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-soft); margin-top: 12px; }
+  .stripe-badge { font-weight: 800; font-size: 13px; background: #635bff; color: #fff; border-radius: 4px; padding: 2px 8px; letter-spacing: 0.02em; }
+  .why li { margin-bottom: 12px; }
+</style>
+</head>
+<body data-page="donate">
+<header data-ddu-header></header>
+
+<main id="main">
+  <section class="page-hero page-hero--red" data-screen-label="Donate hero">
+    <div class="container">
+      <p class="eyebrow">Fuel the campaign</p>
+      <h1 class="display display--skew">Donate</h1>
+      <p class="lede">Everything goes to advertising, organisers and printed material in the seats that decide November. Payments are processed securely by Stripe — we never see or store your card details.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container don-wrap">
+
+      <div data-screen-label="Why donate">
+        <p class="eyebrow kicker-rule">Where it goes</p>
+        <ul class="why" style="font-size:16px; color:#333d52; padding-left:20px">
+          <li><strong>$25</strong> prints 200 Two Victorias leaflets for a street stall.</li>
+          <li><strong>$50</strong> puts a Two Victorias card in front of ~4,000 voters in a marginal seat.</li>
+          <li><strong>$100</strong> funds a yard-sign run for one suburb.</li>
+          <li><strong>Monthly gifts</strong> let us book advertising for the final fortnight now, when it's cheapest.</li>
+        </ul>
+        <div class="gov-says" style="margin-top:24px">
+          <span class="gs-label">Compliance, stated plainly</span>
+          <p>Donations are <strong>not tax deductible</strong>. Donations may only be accepted from Australian citizens or residents and Australian-registered entities. Disclosure thresholds and caps under the Electoral Act 2002 (Vic) apply, and our donations are reported to the VEC as required. <a href="donations-policy.html">Read the full donations policy</a>.</p>
+        </div>
+        <p class="source-links" style="margin-top:16px">Recurring donors can manage or cancel anytime via Stripe's hosted portal — link in every receipt.</p>
+      </div>
+
+      <div class="card card--pad" id="donCard" data-screen-label="Donation flow">
+        <div class="don-steps" aria-hidden="true"><span class="on" data-step-bar="1"></span><span data-step-bar="2"></span><span data-step-bar="3"></span></div>
+
+        <!-- STEP 1: amount -->
+        <div data-step="1">
+          <h2 style="font-size:22px; margin-bottom:14px">Choose your gift</h2>
+          <div class="freq-toggle2" role="group" aria-label="Frequency">
+            <button type="button" class="sel" data-freq="once">One-off</button>
+            <button type="button" data-freq="monthly">Monthly until the election</button>
+          </div>
+          <div class="amts" role="group" aria-label="Amount">
+            <button type="button" data-amt="25">$25<small>200 leaflets</small></button>
+            <button type="button" class="sel" data-amt="50">$50<small>~4,000 voters reached</small></button>
+            <button type="button" data-amt="100">$100<small>a suburb of yard signs</small></button>
+            <button type="button" data-amt="custom">Custom<small>you choose</small></button>
+          </div>
+          <div class="field" data-custom style="display:none">
+            <label for="dAmt">Custom amount (AUD, min $2)</label>
+            <input id="dAmt" type="number" min="2" placeholder="$">
+          </div>
+          <label class="checkline"><input type="checkbox" id="dFee" checked> Add 3% so 100% of my gift reaches the campaign</label>
+          <div class="summary" id="sum1"></div>
+          <button class="btn btn--red btn--lg btn--block" id="toStep2" type="button">Continue</button>
+        </div>
+
+        <!-- STEP 2: details + attestation -->
+        <div data-step="2" hidden>
+          <h2 style="font-size:22px; margin-bottom:14px">Your details</h2>
+          <div class="grid grid--2" style="gap:0 16px">
+            <div class="field" data-f="fn"><label for="dFn">First name</label><input id="dFn" type="text" autocomplete="given-name"><span class="err">Required.</span></div>
+            <div class="field" data-f="ln"><label for="dLn">Last name</label><input id="dLn" type="text" autocomplete="family-name"><span class="err">Required.</span></div>
+          </div>
+          <div class="field" data-f="em"><label for="dEm">Email (for your receipt)</label><input id="dEm" type="email" autocomplete="email"><span class="err">A valid email is required for your receipt.</span></div>
+          <div class="grid grid--2" style="gap:0 16px">
+            <div class="field" data-f="pc"><label for="dPc">Postcode</label><input id="dPc" type="text" inputmode="numeric" maxlength="4" autocomplete="postal-code"><span class="err">Required for electoral disclosure.</span></div>
+            <div class="field"><label for="dOcc">Occupation <span style="font-weight:400; color:var(--ink-soft)">(disclosure)</span></label><input id="dOcc" type="text"></div>
+          </div>
+          <div class="attest">
+            <label class="checkline" style="margin:0" data-f="att">
+              <input type="checkbox" id="dAtt">
+              <span>I confirm I am an <strong>Australian citizen or resident</strong> (or an Australian-registered entity), this donation is from my own funds, and I understand it is <strong>not tax deductible</strong> and may be disclosed under Victorian electoral law.</span>
+            </label>
+            <span class="err" style="display:none; font-size:13px; color:var(--red); font-weight:600">You must confirm eligibility to donate.</span>
+          </div>
+          <div class="summary" id="sum2"></div>
+          <div style="display:flex; gap:10px">
+            <button class="btn btn--ghost" type="button" id="back1">Back</button>
+            <button class="btn btn--red btn--lg" type="button" id="toStep3" style="flex:1">Continue to secure payment</button>
+          </div>
+        </div>
+
+        <!-- STEP 3: handoff to Stripe -->
+        <div data-step="3" hidden>
+          <h2 style="font-size:22px; margin-bottom:10px">Secure payment</h2>
+          <p style="font-size:15px; color:var(--ink-soft)">You're being handed to Stripe Checkout — our payment processor. Your card details go to Stripe, never to us. You'll get a receipt from Don't Divide Us immediately.</p>
+          <div class="summary" id="sum3"></div>
+          <a class="btn btn--red btn--lg btn--block" id="stripeGo" href="https://donate.stripe.com/test_REPLACE_WITH_LIVE_LINK" target="_blank" rel="noopener">Pay securely with Stripe →</a>
+          <p class="stripe-note"><span class="stripe-badge">stripe</span> In production this button opens Stripe Checkout with the amount, frequency and donor details pre-filled via a Checkout Session. Webhooks write the donation back to the CRM.</p>
+          <button class="btn btn--ghost btn--sm" type="button" id="back2" style="margin-top:10px">Back</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer data-ddu-footer></footer>
+<script src="js/site.js"></script>
+<script>
+(function () {
+  var state = { freq: "once", amt: 50, fee: true };
+  var card = document.getElementById("donCard");
+
+  // preset from query string (home embed passes ?amount=&freq=)
+  var q = new URLSearchParams(location.search);
+  if (q.get("freq") === "monthly") state.freq = "monthly";
+  var qa = parseFloat(q.get("amount"));
+  if (qa && [25, 50, 100].indexOf(qa) === -1) { state.amt = "custom"; }
+  else if (qa) { state.amt = qa; }
+
+  function val() { return state.amt === "custom" ? (parseFloat(document.getElementById("dAmt").value) || 0) : state.amt; }
+  function fee() { return state.fee ? Math.round(val() * 3) / 100 : 0; }
+  function total() { return (val() + fee()).toFixed(2).replace(/\.00$/, ""); }
+  function sumHtml() {
+    return '<div class="line"><span>Gift</span><span>$' + val().toFixed(2) + '</span></div>' +
+      '<div class="line"><span>Processing fee chip-in</span><span>$' + fee().toFixed(2) + '</span></div>' +
+      '<div class="line total"><span>' + (state.freq === "monthly" ? "Monthly total" : "Total") + '</span><span>$' + total() + (state.freq === "monthly" ? "/mo" : "") + '</span></div>';
+  }
+  function paint() {
+    ["sum1", "sum2", "sum3"].forEach(function (id) { document.getElementById(id).innerHTML = sumHtml(); });
+    document.getElementById("stripeGo").textContent = "Pay $" + total() + (state.freq === "monthly" ? "/month" : "") + " securely with Stripe →";
+  }
+
+  card.querySelectorAll("[data-freq]").forEach(function (b) {
+    if (b.getAttribute("data-freq") === state.freq) { card.querySelectorAll("[data-freq]").forEach(function (x) { x.classList.remove("sel"); }); b.classList.add("sel"); }
+    b.addEventListener("click", function () {
+      card.querySelectorAll("[data-freq]").forEach(function (x) { x.classList.remove("sel"); });
+      b.classList.add("sel"); state.freq = b.getAttribute("data-freq"); paint();
+    });
+  });
+  card.querySelectorAll("[data-amt]").forEach(function (b) {
+    var v = b.getAttribute("data-amt");
+    if (String(state.amt) === v) { card.querySelectorAll("[data-amt]").forEach(function (x) { x.classList.remove("sel"); }); b.classList.add("sel"); }
+    b.addEventListener("click", function () {
+      card.querySelectorAll("[data-amt]").forEach(function (x) { x.classList.remove("sel"); });
+      b.classList.add("sel");
+      state.amt = v === "custom" ? "custom" : parseInt(v, 10);
+      card.querySelector("[data-custom]").style.display = v === "custom" ? "block" : "none";
+      paint();
+    });
+  });
+  if (state.amt === "custom") {
+    card.querySelector("[data-custom]").style.display = "block";
+    if (qa) document.getElementById("dAmt").value = qa;
+  }
+  document.getElementById("dAmt").addEventListener("input", paint);
+  document.getElementById("dFee").addEventListener("change", function () { state.fee = this.checked; paint(); });
+
+  function goStep(n) {
+    card.querySelectorAll("[data-step]").forEach(function (s) {
+      if (s.getAttribute("data-step") === String(n)) s.removeAttribute("hidden"); else s.setAttribute("hidden", "");
+    });
+    card.querySelectorAll("[data-step-bar]").forEach(function (b) {
+      b.classList.toggle("on", parseInt(b.getAttribute("data-step-bar"), 10) <= n);
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  document.getElementById("toStep2").addEventListener("click", function () {
+    if (val() < 2) { document.getElementById("dAmt").focus(); return; }
+    goStep(2);
+  });
+  document.getElementById("back1").addEventListener("click", function () { goStep(1); });
+  document.getElementById("back2").addEventListener("click", function () { goStep(2); });
+  document.getElementById("toStep3").addEventListener("click", function () {
+    var ok = true;
+    function check(f, valid) {
+      var w = card.querySelector('[data-f="' + f + '"]');
+      w.classList.toggle("field--error", !valid);
+      if (f === "att") { w.parentElement.querySelector(".err").style.display = valid ? "none" : "block"; }
+      if (!valid) ok = false;
+    }
+    check("fn", document.getElementById("dFn").value.trim().length > 0);
+    check("ln", document.getElementById("dLn").value.trim().length > 0);
+    check("em", /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(document.getElementById("dEm").value.trim()));
+    check("pc", /^\d{4}$/.test(document.getElementById("dPc").value.trim()));
+    check("att", document.getElementById("dAtt").checked);
+    if (ok) goStep(3);
+  });
+
+  paint();
+})();
+</script>
+</body>
+</html>

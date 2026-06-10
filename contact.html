@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact | Don't Divide Us</title>
+<link rel="icon" href="assets/ddu-logo-transparent.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Public+Sans:wght@400;500;600;700;800&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ddu.css">
+</head>
+<body data-page="contact">
+<header data-ddu-header></header>
+
+<main id="main">
+  <section class="page-hero" data-screen-label="Contact hero">
+    <div class="container">
+      <p class="eyebrow">Talk to us</p>
+      <h1 class="display display--skew">Contact</h1>
+      <p class="lede">General enquiries, media, corrections, quote-removal requests and complaints all come through here — routed to a named person, not a void.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="card card--pad">
+        <form id="contactForm">
+          <div class="grid grid--2" style="gap:0 16px">
+            <div class="field"><label for="cName">Name</label><input id="cName" type="text" required></div>
+            <div class="field"><label for="cEmail">Email</label><input id="cEmail" type="email" required></div>
+          </div>
+          <div class="field">
+            <label for="cTopic">What is this about?</label>
+            <select id="cTopic">
+              <option>General enquiry</option>
+              <option>Media enquiry (on deadline)</option>
+              <option>Correction to a published claim</option>
+              <option>Quote removal or contextualisation (Voices)</option>
+              <option>Complaint</option>
+              <option>Volunteering and events</option>
+            </select>
+            <p class="hint" id="topicHint">Answered within 3 business days.</p>
+          </div>
+          <div class="field"><label for="cMsg">Message</label><textarea id="cMsg" rows="6" required></textarea></div>
+          <button class="btn btn--red btn--lg" type="submit">Send</button>
+        </form>
+      </div>
+      <p class="source-links" style="margin-top:18px">Quote-removal requests under our <a href="voices.html">Voices editorial standard</a> are actioned within 48 hours. Complaints follow the <a href="complaints.html">complaints policy</a>, including escalation to an external body where relevant.</p>
+    </div>
+  </section>
+</main>
+
+<footer data-ddu-footer></footer>
+<script src="js/site.js"></script>
+<script>
+  var hints = {
+    "Media enquiry (on deadline)": "Routed to the press phone — answered 7am–9pm, 7 days.",
+    "Correction to a published claim": "Logged on the fact-check tracker if substantive — with the correction published.",
+    "Quote removal or contextualisation (Voices)": "Actioned within 48 hours under the published editorial standard.",
+    "Complaint": "Acknowledged in 2 business days; escalation path in the complaints policy."
+  };
+  document.getElementById("cTopic").addEventListener("change", function () {
+    document.getElementById("topicHint").textContent = hints[this.value] || "Answered within 3 business days.";
+  });
+  document.getElementById("contactForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    this.innerHTML = '<div style="text-align:center; padding:24px 0"><strong style="font-size:18px">Message sent.</strong><p style="font-size:14.5px; color:var(--ink-soft); margin:8px 0 0 0">You\u2019ll get an acknowledgement by email shortly.</p></div>';
+  });
+</script>
+</body>
+</html>

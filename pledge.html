@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign the pledge | Don't Divide Us</title>
+<link rel="icon" href="assets/ddu-logo-transparent.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Public+Sans:wght@400;500;600;700;800&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ddu.css">
+<style>
+  .pledge-wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start; }
+  @media (max-width: 900px) { .pledge-wrap { grid-template-columns: 1fr; } }
+  .pledge-text { font-family: var(--font-serif); font-size: 21px; line-height: 1.7; color: #2c3548; }
+  .pledge-text strong { color: var(--red); }
+  .signers { font-size: 14px; color: var(--ink-soft); display: flex; align-items: center; gap: 10px; margin-top: 22px; }
+  .signers .n { font-family: var(--font-display); font-size: 30px; color: var(--navy); }
+  .success-card { text-align: center; padding: 44px 32px; }
+</style>
+</head>
+<body data-page="pledge">
+<header data-ddu-header></header>
+
+<main id="main">
+  <section class="page-hero page-hero--red" data-screen-label="Pledge hero">
+    <div class="container">
+      <p class="eyebrow">The petition</p>
+      <h1 class="display display--skew">Stop Victoria being divided by law</h1>
+      <p class="lede">Add your name. Every pledge is counted by electorate — which means every pledge is pressure on a specific MP.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container pledge-wrap">
+
+      <div data-screen-label="Pledge text">
+        <p class="eyebrow kicker-rule">The pledge</p>
+        <p class="pledge-text">We demand Victoria's leaders <strong>repeal the Statewide Treaty Act 2025</strong>.</p>
+        <p class="pledge-text">This Act is a profound betrayal of the principles of equality and democracy. It lacks a clear public mandate, and its cost will burden all Victorians.</p>
+        <p class="pledge-text">We reject any legislation that divides our community by creating a two-tiered society — and we commit our votes, our voices and our networks to restoring one Victoria, where every citizen stands equal before the law.</p>
+        <div class="signers">
+          <span class="n">12,847</span>
+          <span>Victorians have signed<br>· counter placeholder, fed by CRM</span>
+        </div>
+        <p class="source-links" style="margin-top:18px">Pledge wording adapted from the campaign petition. Your details are handled under our <a href="privacy.html">privacy policy</a> and never sold.</p>
+      </div>
+
+      <div class="card card--pad" id="pledgeCard" data-screen-label="Pledge form">
+        <form id="pledgeForm" novalidate>
+          <div class="field" data-f="name"><label for="pName">Full name</label><input id="pName" type="text" autocomplete="name"><span class="err">Please enter your name.</span></div>
+          <div class="field" data-f="email"><label for="pEmail">Email</label><input id="pEmail" type="email" autocomplete="email"><span class="err">Please enter a valid email.</span></div>
+          <div class="grid grid--2" style="gap:0 16px">
+            <div class="field" data-f="postcode"><label for="pPc">Postcode</label><input id="pPc" type="text" inputmode="numeric" maxlength="4" autocomplete="postal-code"><span class="err">Victorian postcodes start with 3 or 8.</span></div>
+            <div class="field"><label for="pMob">Mobile (optional)</label><input id="pMob" type="tel" autocomplete="tel"></div>
+          </div>
+          <label class="checkline"><input type="checkbox" id="cEmail" checked> Email me campaign updates and actions in my electorate</label>
+          <label class="checkline"><input type="checkbox" id="cSms"> Text me close to election day (SMS)</label>
+          <button class="btn btn--red btn--lg btn--block" type="submit" style="margin-top:10px">Sign the pledge</button>
+          <p class="hint" style="margin-top:10px">By signing you confirm you are a Victorian resident or enrolled voter. Authorised by [Authoriser name], Don't Divide Us, Melbourne.</p>
+        </form>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer data-ddu-footer></footer>
+<script src="js/site.js"></script>
+<script>
+(function () {
+  var form = document.getElementById("pledgeForm");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var ok = true;
+    function check(f, valid) {
+      var w = form.querySelector('[data-f="' + f + '"]');
+      w.classList.toggle("field--error", !valid);
+      if (!valid) ok = false;
+    }
+    var name = document.getElementById("pName").value.trim();
+    var email = document.getElementById("pEmail").value.trim();
+    var pc = document.getElementById("pPc").value.trim();
+    check("name", name.length > 1);
+    check("email", /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email));
+    check("postcode", /^(3|8)\d{3}$/.test(pc));
+    if (!ok) return;
+    document.getElementById("pledgeCard").innerHTML =
+      '<div class="success-card">' +
+      '<img src="assets/ddu-logo-transparent.png" alt="" style="width:90px; margin:0 auto 16px auto">' +
+      '<h2 class="display" style="font-size:30px">You\u2019re number 12,848.</h2>' +
+      '<p style="color:var(--ink-soft); margin:12px 0 22px 0">Your pledge has been counted in postcode ' + pc + '. The fastest way to double it:</p>' +
+      '<div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap">' +
+      '<a class="btn btn--navy" href="two-victorias.html">Share a Two Victorias card</a>' +
+      '<a class="btn btn--ghost" href="your-mp.html">Write to your MP</a></div></div>';
+  });
+})();
+</script>
+</body>
+</html>

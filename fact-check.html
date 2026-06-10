@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fact check tracker | Don't Divide Us</title>
+<link rel="icon" href="assets/ddu-logo-transparent.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Public+Sans:wght@400;500;600;700;800&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ddu.css">
+<style>
+  .fc-entry { padding: 24px 26px; margin-bottom: 16px; }
+  .fc-entry[hidden] { display: none; }
+  .fc-top { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 10px; }
+  .fc-claim { font-family: var(--font-serif); font-size: 19px; font-style: italic; color: var(--ink); margin: 0 0 10px 0; }
+  .fc-who { font-size: 13.5px; color: var(--ink-soft); }
+  .fc-evidence { font-size: 15px; color: #333d52; margin: 12px 0 0 0; }
+  .fc-src { font-size: 13px; margin-top: 10px; }
+</style>
+</head>
+<body data-page="fact-check">
+<header data-ddu-header></header>
+
+<main id="main">
+  <section class="page-hero" data-screen-label="Fact check hero">
+    <div class="container">
+      <p class="eyebrow">Running tracker</p>
+      <h1 class="display display--skew">Fact check</h1>
+      <p class="lede">Contested claims about the Statewide Treaty Act — theirs <em>and ours</em> — with a verdict and primary sources for each. This tracker includes claims made by Don't Divide Us. If we get something wrong, the correction is published here, permanently.</p>
+    </div>
+  </section>
+
+  <section class="section section--tight">
+    <div class="container container--narrow">
+      <div class="tv-toolbar" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:24px">
+        <div class="chip-row" data-fc-filter="source">
+          <button class="chip active" data-v="all" type="button">All sources</button>
+          <button class="chip" data-v="government" type="button">Government</button>
+          <button class="chip" data-v="advocacy" type="button">Advocacy</button>
+          <button class="chip" data-v="opposition" type="button">Opposition</button>
+          <button class="chip" data-v="us" type="button">Don't Divide Us</button>
+        </div>
+        <div class="chip-row" data-fc-filter="verdict" style="margin-left:auto">
+          <button class="chip active" data-v="all" type="button">All verdicts</button>
+          <button class="chip" data-v="supported" type="button">Supported</button>
+          <button class="chip" data-v="contested" type="button">Contested</button>
+          <button class="chip" data-v="misleading" type="button">Misleading</button>
+        </div>
+      </div>
+      <div id="fcList"></div>
+    </div>
+  </section>
+</main>
+
+<footer data-ddu-footer></footer>
+<script src="js/site.js"></script>
+<script>
+var FC = [
+  {
+    claim: "Gellung Warl is a third chamber of Parliament with a veto over legislation.",
+    who: "Circulating on social media", when: "Nov 2025", source: "advocacy",
+    verdict: "misleading",
+    evidence: "The Act gives Gellung Warl consultation, question and oversight powers — not a vote on Bills and not a veto. Overstating the Act's powers hurts the case against it. Our argument is about parallel civic structures, not an imaginary veto.",
+    src: "Statewide Treaty Act 2025, Parts 4, 8"
+  },
+  {
+    claim: "The treaty will cost taxpayers more than $70 million a year by the end of the decade.",
+    who: "Institute of Public Affairs analysis, cited by us in early material", when: "Oct 2025", source: "us",
+    verdict: "contested",
+    evidence: "Budget papers confirm escalating funding commitments, but the $70m+ end-of-decade figure rests on modelling assumptions the government disputes. We now describe the cost as 'ongoing and rising, with totals contested' and link both estimates.",
+    src: "Victorian Budget papers; IPA modelling; Treasurer's statements"
+  },
+  {
+    claim: "The treaty takes nothing away from non-Indigenous Victorians.",
+    who: "Premier's office", when: "Oct 2025", source: "government",
+    verdict: "contested",
+    evidence: "True in the narrow sense: no existing entitlement is removed. But the claim ignores what the Act adds for one group only — a second roll, statutory access to ministers, naming authority, a treaty test on all future Bills. Whether that 'takes nothing' from equal citizenship is the question of the election.",
+    src: "Statewide Treaty Act 2025; Two Victorias comparison"
+  },
+  {
+    claim: "Victorians voted for treaty at successive state elections.",
+    who: "Government MPs in second-reading debate", when: "16 Oct 2025", source: "government",
+    verdict: "contested",
+    evidence: "Treaty appeared in Labor platforms. But no Bill text existed before the 2022 election, and the 2023 referendum saw most Victorian electorates vote No to a less far-reaching body. A platform line is not a mandate for a permanent statutory structure.",
+    src: "Assembly Hansard, 16 Oct 2025; AEC referendum results 2023"
+  },
+  {
+    claim: "The Coalition will repeal the Statewide Treaty Act if elected in November 2026.",
+    who: "Leader of the Opposition", when: "Oct 2025", source: "opposition",
+    verdict: "supported",
+    evidence: "The commitment has been made publicly and repeatedly since the Bill passed. We log every instance — date, speaker, source — on the Coalition pledge tracker, and will track delivery if they win.",
+    src: "Coalition pledge tracker"
+  },
+  {
+    claim: "Enrolment on the First Peoples roll is compulsory for Aboriginal Victorians.",
+    who: "Chain email", when: "Dec 2025", source: "advocacy",
+    verdict: "misleading",
+    evidence: "Enrolment is voluntary. Many Aboriginal Victorians have chosen not to enrol — participation rates are themselves a point of debate about the body's representativeness.",
+    src: "Statewide Treaty Act 2025, Part 3"
+  }
+];
+
+(function () {
+  var list = document.getElementById("fcList");
+  var V = { supported: "badge--ok", contested: "badge--warn", misleading: "badge--red", unsupported: "badge--gray" };
+  var S = { government: "Government", advocacy: "Advocacy", opposition: "Opposition", us: "Don't Divide Us" };
+  FC.forEach(function (f) {
+    var el = document.createElement("article");
+    el.className = "card fc-entry";
+    el.setAttribute("data-source", f.source);
+    el.setAttribute("data-verdict", f.verdict);
+    el.innerHTML =
+      '<div class="fc-top"><span class="badge ' + V[f.verdict] + '">' + f.verdict + '</span>' +
+      '<span class="badge badge--gray">' + S[f.source] + '</span>' +
+      '<span class="fc-who">' + f.who + ' · ' + f.when + '</span></div>' +
+      '<p class="fc-claim">\u201c' + f.claim + '\u201d</p>' +
+      '<p class="fc-evidence">' + f.evidence + '</p>' +
+      '<p class="source-links fc-src">Sources: ' + f.src + '</p>';
+    list.appendChild(el);
+  });
+
+  var state = { source: "all", verdict: "all" };
+  document.querySelectorAll("[data-fc-filter]").forEach(function (group) {
+    var kind = group.getAttribute("data-fc-filter");
+    group.querySelectorAll(".chip").forEach(function (chip) {
+      chip.addEventListener("click", function () {
+        group.querySelectorAll(".chip").forEach(function (c) { c.classList.remove("active"); });
+        chip.classList.add("active");
+        state[kind] = chip.getAttribute("data-v");
+        apply();
+      });
+    });
+  });
+  function apply() {
+    list.querySelectorAll(".fc-entry").forEach(function (el) {
+      var ok = (state.source === "all" || el.getAttribute("data-source") === state.source) &&
+               (state.verdict === "all" || el.getAttribute("data-verdict") === state.verdict);
+      if (ok) el.removeAttribute("hidden"); else el.setAttribute("hidden", "");
+    });
+  }
+})();
+</script>
+</body>
+</html>
