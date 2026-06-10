@@ -56,7 +56,7 @@
       '</a>' +
       '<nav class="nav" aria-label="Primary">' + navHtml + '</nav>' +
       '<div class="header-ctas">' +
-        '<a class="btn btn--taupe btn--sm" href="pledge.html">Sign the petition</a>' +
+        '<a class="btn btn--sand btn--sm" href="pledge.html">Sign the petition</a>' +
         '<a class="btn btn--red btn--sm" href="donate.html">Donate</a>' +
         '<button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false">&#9776;</button>' +
       '</div>' +

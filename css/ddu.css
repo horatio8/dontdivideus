@@ -12,8 +12,6 @@
   --red-dark: #821016;
   --sand: #e3d3a6;
   --sand-soft: #f0e7cb;
-  --taupe: #b8a692;
-  --taupe-dark: #a08c75;
   --cream: #faf7ee;
   --paper: #ffffff;
   --ink: #182236;
@@ -221,10 +219,17 @@ p { margin: 0 0 1em 0; text-wrap: pretty; }
   .header-ctas .btn--ghost-light { display: none; }
   .btn--sm { padding: 8px 11px; font-size: 12.5px; }
 }
+@media (max-width: 840px) {
+  /* brand + CTAs hold the top row; nav wraps to a centered second row
+     so the petition/donate buttons are never pushed off-screen */
+  .site-header__inner { flex-wrap: wrap; height: auto; padding-top: 8px; padding-bottom: 8px; }
+  .nav { order: 3; flex-basis: 100%; justify-content: center; }
+}
 @media (max-width: 600px) {
   .nav { display: none; }
   .hamburger { display: block; margin-left: auto; }
-  .header-ctas { margin-left: 0; }
+  .header-ctas { margin-left: auto; }
+  .header-ctas .btn--sm { padding: 8px 10px; font-size: 12px; }
 }
 
 /* ---------- Buttons ---------- */
@@ -251,8 +256,6 @@ p { margin: 0 0 1em 0; text-wrap: pretty; }
 .btn--navy:hover { background: var(--navy-700); color: #fff; box-shadow: 0 6px 18px rgba(30, 58, 92, 0.3); }
 .btn--sand { background: var(--sand); color: var(--navy-900); }
 .btn--sand:hover { background: #d9c789; color: var(--navy-900); }
-.btn--taupe { background: var(--taupe); color: var(--navy-900); }
-.btn--taupe:hover { background: var(--taupe-dark); color: var(--navy-900); box-shadow: 0 6px 18px rgba(160, 140, 117, 0.35); }
 .btn--ghost { background: transparent; color: var(--navy); border-color: var(--navy); }
 .btn--ghost:hover { background: var(--navy); color: #fff; }
 .btn--ghost-light { background: transparent; color: #fff; border-color: rgba(255, 255, 255, 0.55); }
