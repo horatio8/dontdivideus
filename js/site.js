@@ -111,6 +111,7 @@
         '<li><a href="contact.html">Contact</a></li>' +
         '<li><a href="privacy.html">Privacy</a></li>' +
         '<li><a href="donations-policy.html">Donations policy</a></li>' +
+        '<li><a href="editorial-standard.html">Editorial standard</a></li>' +
         '<li><a href="complaints.html">Complaints</a></li>' +
       '</ul></div>' +
     '</div>' +

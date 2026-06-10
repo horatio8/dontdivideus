@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank you | Don't Divide Us</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/ddu-logo-transparent.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Public+Sans:wght@400;500;600;700;800&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ddu.css">
+<style>
+  .thanks { text-align: center; max-width: 640px; margin: 0 auto; }
+  .thanks img { width: 110px; margin: 0 auto 20px auto; }
+  .thanks h1 { font-size: clamp(36px, 5vw, 54px); }
+  .next-steps { margin-top: 40px; text-align: left; }
+  .next-steps .card { padding: 22px 24px; display: flex; gap: 16px; align-items: flex-start; text-decoration: none; color: var(--ink); }
+  .next-steps .card:hover { border-color: var(--navy); }
+  .next-steps .n {
+    font-family: var(--font-display); font-size: 22px; color: var(--red);
+    border: 2px solid var(--line-strong); border-radius: 50%;
+    width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .next-steps h3 { font-size: 17px; margin-bottom: 4px; }
+  .next-steps p { font-size: 14.5px; color: var(--ink-soft); margin: 0; }
+</style>
+</head>
+<body data-page="donate">
+<header data-ddu-header></header>
+
+<main id="main">
+  <section class="section" data-screen-label="Donation success">
+    <div class="container thanks">
+      <img src="assets/ddu-logo-transparent.png" alt="">
+      <p class="eyebrow">Donation received</p>
+      <h1 class="display display--skew">Thank you. This is how campaigns are won.</h1>
+      <p class="lede" style="margin-top:16px">Your receipt is on its way to your inbox from Stripe. Your donation goes straight to advertising, organisers and printed material in the seats that will decide November 2026.</p>
+      <p style="font-size:13.5px; color:var(--ink-soft)">Donations are not tax deductible and are disclosed to the VEC as required under the Electoral Act 2002 (Vic). <a href="donations-policy.html">Donations policy</a></p>
+
+      <div class="next-steps grid" data-screen-label="Post-donation next steps">
+        <a class="card" href="pledge.html"><span class="n">1</span><span><h3>Add your name to the petition</h3><p>Every pledge is counted by electorate — pressure aimed at a specific MP.</p></span></a>
+        <a class="card" href="two-victorias.html"><span class="n">2</span><span><h3>Share a Two Victorias card</h3><p>Pick the comparison that moves you and post the share-card to your feed.</p></span></a>
+        <a class="card" href="get-involved.html"><span class="n">3</span><span><h3>Give an hour, not just a dollar</h3><p>Doorknocks, phone banks and pre-poll shifts in the marginals.</p></span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer data-ddu-footer></footer>
+<script src="js/site.js"></script>
+</body>
+</html>
