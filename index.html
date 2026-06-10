@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Don't Divide Us — One Victoria, equal before the law</title>
+<link rel="icon" href="assets/ddu-logo-transparent.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Public+Sans:wght@400;500;600;700;800&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ddu.css">
+<style>
+  .home-hero { min-height: 600px; display: flex; flex-direction: column; }
+  .home-hero__content {
+    position: relative; z-index: 2;
+    max-width: var(--maxw); margin: 0 auto; padding: 96px 24px 90px 24px;
+    width: 100%;
+  }
+  .home-hero h1 {
+    font-size: clamp(48px, 7.2vw, 96px);
+    max-width: 13ch;
+    text-shadow: 0 4px 30px rgba(15, 34, 56, 0.5);
+  }
+  .home-hero h1 .h-sand { color: var(--sand); }
+  .home-hero .lede { color: rgba(255, 255, 255, 0.88); max-width: 560px; margin: 22px 0 34px 0; font-size: 21px; }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .hero-mark {
+    position: absolute; right: 0; top: 50%;
+    transform: translateY(-50%);
+    width: min(430px, 34vw);
+    opacity: 0.96;
+    filter: drop-shadow(0 18px 50px rgba(15, 34, 56, 0.55));
+    z-index: 1;
+  }
+  @media (max-width: 980px) { .hero-mark { display: none; } }
+
+  /* mini comparison widget */
+  .mini-tv { border-radius: 12px; overflow: hidden; }
+  .mini-tv__head { display: grid; grid-template-columns: 1fr 1fr; }
+  .mini-tv__head > div {
+    padding: 16px 22px; font-family: var(--font-display); text-transform: uppercase;
+    font-size: 19px; letter-spacing: 0.03em; color: #fff;
+  }
+  .mini-tv__head .col-a { background: var(--navy); }
+  .mini-tv__head .col-b { background: var(--red); }
+  .mini-row { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); background: #fff; }
+  .mini-row > div { padding: 18px 22px; font-size: 15px; }
+  .mini-row .cell-b { background: #fbf4f4; border-left: 1px solid var(--line); }
+  .mini-row .row-label { font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; display: block; }
+  @media (max-width: 720px) {
+    .mini-tv__head { grid-template-columns: 1fr; }
+    .mini-row { grid-template-columns: 1fr; }
+    .mini-row .cell-b { border-left: 0; }
+  }
+
+  /* donation embed */
+  .donate-band { background: linear-gradient(110deg, var(--navy-900), var(--navy) 60%, #3b1a36 140%); }
+  .donate-embed { max-width: 520px; }
+  .amounts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0; }
+  .amounts button {
+    font: inherit; font-weight: 800; font-size: 17px;
+    padding: 14px 0; border-radius: var(--radius);
+    border: 2px solid rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.06); color: #fff; cursor: pointer;
+  }
+  .amounts button.sel { background: var(--sand); border-color: var(--sand); color: var(--navy-900); }
+  .freq-toggle { display: inline-flex; border: 2px solid rgba(255, 255, 255, 0.3); border-radius: 99px; overflow: hidden; }
+  .freq-toggle button { font: inherit; font-weight: 700; font-size: 14px; padding: 9px 20px; background: transparent; border: 0; color: rgba(255, 255, 255, 0.8); cursor: pointer; }
+  .freq-toggle button.sel { background: var(--sand); color: var(--navy-900); }
+
+  .news-item { display: flex; flex-direction: column; gap: 8px; padding: 24px; }
+  .news-item time { font-size: 12.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); }
+  .news-item h3 { font-size: 18px; line-height: 1.3; }
+  .news-item p { font-size: 14.5px; color: var(--ink-soft); margin: 0; }
+
+  .endorse-strip { display: flex; flex-wrap: wrap; gap: 14px 36px; align-items: center; }
+  .endorse { display: flex; align-items: center; gap: 12px; }
+  .endorse .ava { width: 44px; height: 44px; border-radius: 50%; background: var(--sand-soft); border: 1.5px dashed var(--line-strong); flex-shrink: 0; }
+  .endorse .nm { font-weight: 700; font-size: 14.5px; line-height: 1.25; }
+  .endorse .rl { font-size: 12.5px; color: var(--ink-soft); }
+</style>
+</head>
+<body data-page="home">
+<header data-ddu-header></header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero home-hero" data-screen-label="Home hero">
+    <div class="hero__duotone" aria-hidden="true"></div>
+    <img class="hero-mark" src="assets/ddu-logo-transparent.png" alt="">
+    <div class="home-hero__content">
+      <p class="eyebrow eyebrow--sand">A campaign to repeal the Statewide Treaty Act 2025</p>
+      <h1 class="display display--skew">Every Victorian<br>should stand <span class="h-sand">equal</span><br>before the law.</h1>
+      <p class="lede">The Statewide Treaty Act 2025 creates two classes of citizen — with different rights, different representation and different access to power. Victorians never voted for that. In November, we can fix it.</p>
+      <div class="hero-ctas">
+        <a class="btn btn--red btn--lg" href="pledge.html">Sign the pledge</a>
+        <a class="btn btn--ghost-light btn--lg" href="the-act.html">See what the Act does</a>
+      </div>
+    </div>
+    <p class="hero__photo-note">Parliament of Victoria</p>
+  </section>
+
+  <!-- trust strip -->
+  <div class="trust-strip">
+    <div class="trust-strip__inner">
+      <span class="count"><span data-countdown-days>—</span> days until the Victorian state election</span>
+      <span aria-hidden="true">·</span>
+      <span>Saturday 28 November 2026</span>
+      <span style="margin-left:auto">Authorised by [Authoriser name], Don't Divide Us, Melbourne</span>
+    </div>
+  </div>
+
+  <!-- ============ THREE TEASERS ============ -->
+  <section class="section" data-screen-label="Home teasers">
+    <div class="container">
+      <div class="grid grid--3">
+        <a class="card teaser" href="the-act.html">
+          <span class="teaser__kicker">Read the law</span>
+          <h3>What the Act actually does</h3>
+          <p>A plain-English, clause-by-clause guide to the Statewide Treaty Act 2025 — every claim linked to the legislation and to Hansard.</p>
+          <span class="teaser__cta">Read the explainer →</span>
+        </a>
+        <a class="card teaser" href="voices.html">
+          <span class="teaser__kicker">Hear the dissent</span>
+          <h3>Voices against the Act</h3>
+          <p>Indigenous Victorians, legal scholars and everyday voters who oppose the Act — every quote sourced, in their own words.</p>
+          <span class="teaser__cta">Hear the voices →</span>
+        </a>
+        <a class="card teaser" href="your-mp.html">
+          <span class="teaser__kicker">Apply the pressure</span>
+          <h3>Find your MP</h3>
+          <p>Enter your postcode to see how your MP voted on the Treaty Bill — and send them a letter in under two minutes.</p>
+          <span class="teaser__cta">Look up your MP →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TWO VICTORIAS MINI ============ -->
+  <section class="section section--paper" data-screen-label="Two Victorias preview">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow kicker-rule">The signature comparison</p>
+        <h2 class="display">One state. Two sets of rules.</h2>
+        <p class="lede">Under the Act, your statutory rights depend on which Victoria you belong to. These are three of ten differences — read them side by side.</p>
+      </div>
+      <div class="mini-tv card" id="miniTv">
+        <div class="mini-tv__head">
+          <div class="col-a">Victorian — general</div>
+          <div class="col-b">Victorian — First Peoples</div>
+        </div>
+        <!-- rows injected -->
+      </div>
+      <div style="margin-top:26px; display:flex; gap:14px; flex-wrap:wrap; align-items:center">
+        <a class="btn btn--navy" href="two-victorias.html">See all ten differences</a>
+        <span class="source-links">Every row sourced to a clause of the Act. <a href="two-victorias.html#sources">Sources</a></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DONATION ============ -->
+  <section class="section donate-band section--navy" data-screen-label="Home donation">
+    <div class="container" style="display:grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
+      <div>
+        <p class="eyebrow eyebrow--sand">Chip in</p>
+        <h2 class="display" style="font-size: clamp(30px,4vw,46px)">They have the government.<br>We have each other.</h2>
+        <p class="lede" style="margin-top:14px">Donations fund advertising, organisers and printed material in the seats that will decide November 2026. Most gifts are under $50.</p>
+        <p style="font-size:13.5px; color: rgba(255,255,255,0.55)">Donations are not tax deductible. By donating you confirm you are an Australian citizen or resident. <a href="donations-policy.html" style="color:var(--sand)">Donations policy</a></p>
+      </div>
+      <div class="donate-embed" data-donate-widget>
+        <div class="freq-toggle" role="group" aria-label="Donation frequency">
+          <button type="button" class="sel" data-freq="once">One-off</button>
+          <button type="button" data-freq="monthly">Monthly</button>
+        </div>
+        <div class="amounts" role="group" aria-label="Amount">
+          <button type="button" data-amt="25">$25</button>
+          <button type="button" class="sel" data-amt="50">$50</button>
+          <button type="button" data-amt="100">$100</button>
+          <button type="button" data-amt="custom">Other</button>
+        </div>
+        <div class="field" data-custom-wrap style="display:none">
+          <label for="customAmt" style="color:#fff">Custom amount (AUD)</label>
+          <input id="customAmt" type="number" min="2" placeholder="$">
+        </div>
+        <label class="checkline" style="color:rgba(255,255,255,0.75)">
+          <input type="checkbox" checked data-feechip> Add 3% to cover processing fees
+        </label>
+        <a class="btn btn--red btn--lg btn--block" href="donate.html" data-donate-go>Donate $50 →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NEWS ============ -->
+  <section class="section" data-screen-label="Home news">
+    <div class="container">
+      <div class="section-head" style="display:flex; align-items:baseline; gap:20px; max-width:none">
+        <h2 class="display" style="font-size:32px">Latest</h2>
+        <a href="media.html" style="font-weight:700; font-size:14.5px; margin-left:auto">Media centre →</a>
+      </div>
+      <div class="grid grid--3">
+        <article class="card news-item">
+          <time datetime="2026-06-02">2 June 2026</time>
+          <h3>Gellung Warl holds first representation meetings with ministers</h3>
+          <p>One month after its establishment, the new statutory body began compulsory-attendance meetings under Part 8 of the Act.</p>
+        </article>
+        <article class="card news-item">
+          <time datetime="2026-05-18">18 May 2026</time>
+          <h3>Coalition confirms repeal commitment for November platform</h3>
+          <p>The Opposition restated that repealing the Statewide Treaty Act will be taken to the 2026 election. Tracked in full on our pledge tracker.</p>
+        </article>
+        <article class="card news-item">
+          <time datetime="2026-05-04">4 May 2026</time>
+          <h3>Don't Divide Us launches the Two Victorias comparison</h3>
+          <p>Ten statutory differences, every one sourced to the Act — now shareable as social cards from every row.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ENDORSEMENTS ============ -->
+  <section class="section section--sand section--tight" data-screen-label="Home endorsements">
+    <div class="container">
+      <p class="eyebrow">Standing with us</p>
+      <div class="endorse-strip">
+        <div class="endorse"><span class="ava" aria-hidden="true"></span><span><span class="nm">[Name placeholder]</span><br><span class="rl">Indigenous community leader · pending consent</span></span></div>
+        <div class="endorse"><span class="ava" aria-hidden="true"></span><span><span class="nm">[Name placeholder]</span><br><span class="rl">Constitutional law academic</span></span></div>
+        <div class="endorse"><span class="ava" aria-hidden="true"></span><span><span class="nm">[Name placeholder]</span><br><span class="rl">Former MP</span></span></div>
+        <div class="endorse"><span class="ava" aria-hidden="true"></span><span><span class="nm">[Name placeholder]</span><br><span class="rl">Small business owner, Ballarat</span></span></div>
+        <span class="review-flag">⚠ Names appear only with written consent — see editorial standard</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer data-ddu-footer></footer>
+
+<script src="js/two-victorias-data.js"></script>
+<script src="js/site.js"></script>
+<script>
+  // Mini Two Victorias: three representative rows
+  (function () {
+    var pick = ["scrutiny", "franchise", "funding"];
+    var host = document.getElementById("miniTv");
+    pick.forEach(function (id) {
+      var r = window.TV_ROWS.find(function (x) { return x.id === id; });
+      var div = document.createElement("div");
+      div.className = "mini-row";
+      div.innerHTML =
+        '<div class="cell-a"><span class="row-label">' + r.label + '</span>' + r.general + '</div>' +
+        '<div class="cell-b"><span class="row-label">' + r.label + ' · ' + r.clause + '</span>' + r.fp + '</div>';
+      host.appendChild(div);
+    });
+  })();
+
+  // Donation embed behaviour
+  (function () {
+    var w = document.querySelector("[data-donate-widget]");
+    var amt = 50, freq = "once";
+    var go = w.querySelector("[data-donate-go]");
+    var customWrap = w.querySelector("[data-custom-wrap]");
+    var customInput = document.getElementById("customAmt");
+    function update() {
+      var val = amt === "custom" ? (parseFloat(customInput.value) || 0) : amt;
+      var fee = w.querySelector("[data-feechip]").checked ? Math.round(val * 3) / 100 : 0;
+      var total = (val + fee).toFixed(2).replace(/\.00$/, "");
+      go.textContent = "Donate $" + total + (freq === "monthly" ? "/month" : "") + " →";
+      go.href = "donate.html?amount=" + val + "&freq=" + freq;
+    }
+    w.querySelectorAll("[data-freq]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        w.querySelectorAll("[data-freq]").forEach(function (x) { x.classList.remove("sel"); });
+        b.classList.add("sel"); freq = b.getAttribute("data-freq"); update();
+      });
+    });
+    w.querySelectorAll("[data-amt]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        w.querySelectorAll("[data-amt]").forEach(function (x) { x.classList.remove("sel"); });
+        b.classList.add("sel");
+        var v = b.getAttribute("data-amt");
+        amt = v === "custom" ? "custom" : parseInt(v, 10);
+        customWrap.style.display = v === "custom" ? "block" : "none";
+        update();
+      });
+    });
+    customInput.addEventListener("input", update);
+    w.querySelector("[data-feechip]").addEventListener("change", update);
+    update();
+  })();
+</script>
+</body>
+</html>
