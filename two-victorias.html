@@ -131,14 +131,13 @@
     <div class="share-modal__body">
       <p class="eyebrow" style="margin-bottom:6px">Share this card</p>
       <h3 id="shareTitle">—</h3>
-      <p style="font-size:14.5px;color:var(--ink-soft)">A 1080×1080 tile with the row contents and our authoriser line — ready for Instagram, Facebook, X or LinkedIn.</p>
+      <p style="font-size:14.5px;color:var(--ink-soft)">A 1080×1080 tile with the row contents and campaign branding — ready for Instagram, Facebook, X or LinkedIn.</p>
       <div class="share-targets">
         <button class="btn btn--navy btn--sm" type="button" id="downloadCard">Download PNG</button>
         <button class="btn btn--ghost btn--sm" type="button" data-share="link">Copy link</button>
         <button class="btn btn--ghost btn--sm" type="button" data-share="x">Share to X</button>
         <button class="btn btn--ghost btn--sm" type="button" data-share="fb">Share to Facebook</button>
       </div>
-      <p style="font-size:12.5px;color:var(--ink-soft);margin:0">Every shared tile carries the authoriser line, as required by the Electoral Act 2002 (Vic).</p>
       <button class="btn btn--ghost btn--sm" type="button" id="closeShare" style="margin-top:18px">Close</button>
     </div>
   </div>
@@ -276,11 +275,11 @@
     ctx.fillText(r.clause + " · STA 2025", 78, 917);
     // logo
     if (logoImg.complete) { ctx.drawImage(logoImg, 880, 850, 150, 150); }
-    // authoriser
+    // campaign strip
     ctx.fillStyle = "#1e3a5c"; ctx.fillRect(0, 990, 1080, 90);
     ctx.fillStyle = "rgba(255,255,255,0.85)";
     ctx.font = "600 22px 'Public Sans', sans-serif";
-    ctx.fillText("Authorised by [Authoriser name], Don't Divide Us, Melbourne · dontdivide.com.au", 60, 1043);
+    ctx.fillText("Don't Divide Us · dontdivide.com.au", 60, 1043);
   }
 
   document.addEventListener("click", function (e) {
