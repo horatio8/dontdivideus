@@ -122,7 +122,6 @@
       '<button class="btn btn--sand btn--sm" type="submit">Subscribe</button></form>' +
     '</div></div>' +
     '<div class="footer-legal"><div class="footer-legal__inner">' +
-      '<p class="auth">Authorised by [Authoriser name], Don\u2019t Divide Us, Melbourne, Victoria.</p>' +
       '<p>Don\u2019t Divide Us acknowledges the contribution of every Victorian \u2014 of every background and ancestry \u2014 to the state we share, and campaigns for laws that treat all of us as equals.</p>' +
       '<p>Donations to Don\u2019t Divide Us are not tax deductible. \u00a9 2026 Don\u2019t Divide Us. <a href="privacy.html">Privacy</a> \u00b7 <a href="donations-policy.html">Donations policy</a> \u00b7 <a href="complaints.html">Complaints</a> \u00b7 <a href="media.html">Media enquiries</a></p>' +
     '</div></div>';
