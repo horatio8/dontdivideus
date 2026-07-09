@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Share the campaign | Don't Divide Us</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/ddu-logo-transparent.png">
+<meta property="og:title" content="Every Victorian should stand equal before the law">
+<meta property="og:description" content="Sign the pledge to repeal the Statewide Treaty Act 2025 and keep Victoria one.">
+<meta property="og:image" content="https://dontdivideus.vercel.app/assets/parliament-duotone.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dontdivideus.vercel.app/share.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dontdivideus.vercel.app/assets/parliament-duotone.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Public+Sans:wght@400;500;600;700;800&amp;family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/ddu.css">
+<style>
+  .share-wrap { max-width: 620px; margin: 0 auto; }
+  .share-state { display: none; }
+  .share-state.on { display: block; }
+  .poll-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--sand); margin-right: 4px; animation: pulse 1.1s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+  .reflink { display: flex; gap: 8px; margin: 18px 0 26px 0; }
+  .reflink input { flex: 1; font: inherit; font-size: 15px; padding: 12px 14px; border: 1.5px solid var(--line-strong); border-radius: var(--radius); background: #fff; color: var(--ink); }
+  .share-btns { display: flex; flex-direction: column; gap: 12px; }
+  .share-btn {
+    display: flex; align-items: center; gap: 14px; width: 100%;
+    font: inherit; font-size: 16px; font-weight: 700; text-align: left;
+    padding: 15px 18px; border-radius: 10px; border: 0; cursor: pointer; color: #fff;
+    text-decoration: none; position: relative; transition: transform 0.12s ease, filter 0.12s ease;
+  }
+  .share-btn:hover { transform: translateY(-2px); filter: brightness(1.05); color: #fff; }
+  .share-btn .ic { width: 26px; text-align: center; font-size: 19px; }
+  .share-btn.used::after { content: "✓"; position: absolute; right: 18px; font-weight: 800; }
+  .share-btn.used { outline: 3px solid rgba(255, 255, 255, 0.5); outline-offset: -3px; }
+  .sb-fb { background: #1877f2; } .sb-x { background: #111; } .sb-li { background: #0a66c2; }
+  .sb-wa { background: #25d366; } .sb-em { background: #d9a521; } .sb-cp { background: #5b6472; }
+  .share-note { font-size: 13px; color: var(--ink-soft); margin-top: 22px; }
+</style>
+</head>
+<body data-page="share">
+<header data-ddu-header></header>
+
+<main id="main">
+  <section class="page-hero page-hero--red" data-screen-label="Share hero">
+    <div class="container">
+      <p class="eyebrow">Multiply your impact</p>
+      <h1 class="display display--skew" id="shareHead">Thank you — now bring others with you</h1>
+      <p class="lede" id="shareSub">The single biggest thing you can do next is get the people you know to sign too. Every friend who signs through your link is tracked back to you.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container share-wrap">
+
+      <!-- STATE: polling (returning from Stripe) -->
+      <div class="share-state" data-state="polling" data-screen-label="Share polling">
+        <div class="card card--pad" style="text-align:center">
+          <p><span class="poll-dot"></span> Confirming your donation…</p>
+          <p class="hint">This takes a few seconds while we match your gift. You can start sharing as soon as it lands.</p>
+        </div>
+      </div>
+
+      <!-- STATE: ask_identity -->
+      <div class="share-state" data-state="ask" data-screen-label="Share ask identity">
+        <div class="card card--pad">
+          <p class="eyebrow kicker-rule">Get your personal share link</p>
+          <p style="color:var(--ink-soft); font-size:15px">Pop in your details and we'll generate a link that credits every sign-up you drive.</p>
+          <form id="askForm" novalidate style="margin-top:14px">
+            <div class="grid grid--2" style="gap:0 16px">
+              <div class="field" data-f="fn"><label for="aFn">First name</label><input id="aFn" type="text" autocomplete="given-name"><span class="err">Required.</span></div>
+              <div class="field" data-f="ln"><label for="aLn">Last name</label><input id="aLn" type="text" autocomplete="family-name"><span class="err">Required.</span></div>
+            </div>
+            <div class="field" data-f="em"><label for="aEm">Email</label><input id="aEm" type="email" autocomplete="email"><span class="err">Enter a valid email.</span></div>
+            <div class="grid grid--2" style="gap:0 16px">
+              <div class="field"><label for="aMob">Mobile (optional)</label><input id="aMob" type="tel" autocomplete="tel"></div>
+              <div class="field"><label for="aPc">Postcode (optional)</label><input id="aPc" type="text" inputmode="numeric" maxlength="4" autocomplete="postal-code"></div>
+            </div>
+            <button class="btn btn--red btn--lg btn--block" type="submit">Get my share link</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- STATE: ready -->
+      <div class="share-state" data-state="ready" data-screen-label="Share ready">
+        <p class="eyebrow kicker-rule">Your personal link</p>
+        <div class="reflink">
+          <input id="refUrl" type="text" readonly aria-label="Your personal share link">
+          <button class="btn btn--navy" id="copyMain" type="button">Copy</button>
+        </div>
+        <div class="share-btns" id="shareBtns"></div>
+        <p class="share-note">Only the name you type into your own browser ever appears in our live activity feed. We never publish supporter details. <a href="privacy.html">Privacy policy</a>.</p>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer data-ddu-footer></footer>
+<script src="js/site.js"></script>
+<script>
+(function () {
+  var PROD_ORIGIN = location.origin.indexOf("http") === 0 ? location.origin : "https://dontdivideus.vercel.app";
+  var SIGNATURE_COUNT = 12847; // {{count}} — operator-editable; feeds share copy
+  var ALPHABET = "23456789ABCDEFGHJKMNPQRSTUVWXYZ"; // Crockford, no 0/O/1/I/L
+
+  function states() { return document.querySelectorAll(".share-state"); }
+  function setState(name) {
+    states().forEach(function (s) { s.classList.toggle("on", s.getAttribute("data-state") === name); });
+  }
+  function genCode(n) {
+    n = n || 6; var out = "";
+    var arr = new Uint8Array(n);
+    (window.crypto || window.msCrypto).getRandomValues(arr);
+    for (var i = 0; i < n; i++) out += ALPHABET[arr[i] % ALPHABET.length];
+    return out;
+  }
+  function getCode() {
+    var c = "";
+    try { c = localStorage.getItem("ddu_referral_code") || ""; } catch (e) {}
+    if (!c) { c = genCode(6); try { localStorage.setItem("ddu_referral_code", c); } catch (e) {} }
+    return c;
+  }
+  function petitionSlug() {
+    try {
+      var u = localStorage.getItem("ddu_last_petition_url");
+      if (u) { var f = new URL(u, location.href).pathname.split("/").pop().replace(/\.html$/, ""); if (f && f !== "index") return f + ".html"; }
+    } catch (e) {}
+    return "pledge.html";
+  }
+  function shareUrl(code) { return PROD_ORIGIN + "/" + petitionSlug() + "?ref=" + code; }
+
+  var SHARE_TEXT = "Victorians never voted to be divided by law. " + SIGNATURE_COUNT.toLocaleString() +
+    " of us have signed to repeal the Statewide Treaty Act 2025 — add your name:";
+
+  var PLATFORMS = [
+    { key: "facebook", cls: "sb-fb", ic: "f", label: "Share on Facebook", url: function (u) { return "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(u); } },
+    { key: "x", cls: "sb-x", ic: "𝕏", label: "Share on X", url: function (u) { return "https://twitter.com/intent/tweet?text=" + encodeURIComponent(SHARE_TEXT + " " + u); } },
+    { key: "linkedin", cls: "sb-li", ic: "in", label: "Share on LinkedIn", url: function (u) { return "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(u); } },
+    { key: "whatsapp", cls: "sb-wa", ic: "✆", label: "Share on WhatsApp", url: function (u) { return "https://wa.me/?text=" + encodeURIComponent(SHARE_TEXT + " " + u); } },
+    { key: "email", cls: "sb-em", ic: "✉", label: "Share by email", url: function (u) { return "mailto:?subject=" + encodeURIComponent("Stand up for one Victoria") + "&body=" + encodeURIComponent(SHARE_TEXT + "\n\n" + u); } },
+    { key: "copy", cls: "sb-cp", ic: "⧉", label: "Copy link", url: null }
+  ];
+
+  function usedSet() {
+    try { return JSON.parse(localStorage.getItem("ddu_shared_platforms") || "[]"); } catch (e) { return []; }
+  }
+  function markUsed(key) {
+    var s = usedSet(); if (s.indexOf(key) === -1) s.push(key);
+    try { localStorage.setItem("ddu_shared_platforms", JSON.stringify(s)); } catch (e) {}
+  }
+  function issue(code, platform, url) {
+    try {
+      fetch("/api/share-issued", {
+        method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+        body: JSON.stringify({ referral_code: code, platform: platform, share_url: url })
+      }).catch(function () {});
+    } catch (e) {}
+  }
+
+  function renderReady() {
+    var code = getCode();
+    var url = shareUrl(code);
+    document.getElementById("refUrl").value = url;
+    var used = usedSet();
+    var host = document.getElementById("shareBtns");
+    host.innerHTML = "";
+    PLATFORMS.forEach(function (p) {
+      var el = document.createElement(p.url ? "a" : "button");
+      el.className = "share-btn " + p.cls + (used.indexOf(p.key) !== -1 ? " used" : "");
+      if (p.url) { el.href = p.url(url); el.target = "_blank"; el.rel = "noopener"; }
+      else { el.type = "button"; }
+      el.innerHTML = '<span class="ic" aria-hidden="true">' + p.ic + "</span>" + p.label;
+      el.addEventListener("click", function (e) {
+        issue(code, p.key, url);
+        markUsed(p.key);
+        el.classList.add("used");
+        if (!p.url) { e.preventDefault(); copy(url, el); }
+      });
+      host.appendChild(el);
+    });
+    setState("ready");
+  }
+
+  function copy(text, btn) {
+    var old = btn ? btn.textContent : "";
+    function done() { if (btn) { btn.textContent = "Copied ✓"; setTimeout(function () { btn.innerHTML = '<span class="ic" aria-hidden="true">⧉</span>Copy link'; }, 1600); } }
+    if (navigator.clipboard) { navigator.clipboard.writeText(text).then(done, function () {}); }
+    else { var t = document.getElementById("refUrl"); t.select(); try { document.execCommand("copy"); done(); } catch (e) {} }
+  }
+  document.getElementById("copyMain").addEventListener("click", function () { copy(document.getElementById("refUrl").value, this); });
+
+  // ask_identity form
+  document.getElementById("askForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var form = e.target, ok = true;
+    function check(f, valid) { var w = form.querySelector('[data-f="' + f + '"]'); w.classList.toggle("field--error", !valid); if (!valid) ok = false; }
+    var fn = document.getElementById("aFn").value.trim();
+    check("fn", fn.length > 0);
+    check("ln", document.getElementById("aLn").value.trim().length > 0);
+    check("em", /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(document.getElementById("aEm").value.trim()));
+    if (!ok) return;
+    try { localStorage.setItem("ddu_donor_first", fn); } catch (err) {}
+    // Optional backend: mint the code server-side; fall back to a local code.
+    try {
+      fetch("/api/share-signup", {
+        method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+        body: JSON.stringify({
+          first_name: fn, last_name: document.getElementById("aLn").value.trim(),
+          email: document.getElementById("aEm").value.trim(),
+          mobile: document.getElementById("aMob").value.trim(), postcode: document.getElementById("aPc").value.trim()
+        })
+      }).then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { if (d && d.referral_code) { try { localStorage.setItem("ddu_referral_code", d.referral_code); } catch (err) {} } renderReady(); })
+        .catch(function () { renderReady(); });
+    } catch (err) { renderReady(); }
+    // Render immediately with a local code; a server code (if any) refreshes on next load.
+    renderReady();
+  });
+
+  // Personalise the header if we know who this is
+  try {
+    var who = localStorage.getItem("ddu_donor_first") || "";
+    if (who) { document.getElementById("shareHead").textContent = "Thank you, " + who + " — now bring others with you"; }
+  } catch (e) {}
+
+  // Entry routing
+  var q = new URLSearchParams(location.search);
+  var haveCode = false;
+  try { haveCode = !!localStorage.getItem("ddu_referral_code"); } catch (e) {}
+
+  if (haveCode) {
+    renderReady();
+  } else if (q.get("session_id") || q.get("cs")) {
+    // Returning from Stripe — poll the backend for the donor's contact/code.
+    setState("polling");
+    var sid = q.get("session_id") || q.get("cs");
+    var tries = 0, max = 15;
+    (function poll() {
+      tries++;
+      var done = false;
+      try {
+        fetch("/api/share-context?session_id=" + encodeURIComponent(sid))
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (d) {
+            if (d && d.referral_code) {
+              done = true;
+              try { localStorage.setItem("ddu_referral_code", d.referral_code); if (d.first_name) localStorage.setItem("ddu_donor_first", d.first_name); } catch (e) {}
+              renderReady();
+            } else if (tries < max) { setTimeout(poll, 2000); }
+            else { setState("ask"); }
+          })
+          .catch(function () { if (tries < max) setTimeout(poll, 2000); else setState("ask"); });
+      } catch (e) { setState("ask"); }
+    })();
+  } else {
+    setState("ask");
+  }
+})();
+</script>
+</body>
+</html>
