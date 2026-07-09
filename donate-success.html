@@ -40,7 +40,7 @@
 
       <div class="next-steps grid" data-screen-label="Post-donation next steps">
         <a class="card" href="pledge.html"><span class="n">1</span><span><h3>Add your name to the petition</h3><p>Every pledge is counted by electorate — pressure aimed at a specific MP.</p></span></a>
-        <a class="card" href="two-victorias.html"><span class="n">2</span><span><h3>Share a Two Victorias card</h3><p>Pick the comparison that moves you and post the share-card to your feed.</p></span></a>
+        <a class="card" href="share.html"><span class="n">2</span><span><h3>Share &amp; recruit friends</h3><p>Get your personal link — every friend who signs through it is tracked back to you.</p></span></a>
         <a class="card" href="get-involved.html"><span class="n">3</span><span><h3>Give an hour, not just a dollar</h3><p>Doorknocks, phone banks and pre-poll shifts in the marginals.</p></span></a>
       </div>
     </div>
@@ -49,5 +49,17 @@
 
 <footer data-ddu-footer></footer>
 <script src="js/site.js"></script>
+<script>
+(function () {
+  // Confirm the gift and drive the live activity ticker (real donation-completed event).
+  var q = new URLSearchParams(location.search);
+  var first = "", amount = 0;
+  try {
+    first = localStorage.getItem("ddu_donor_first") || "";
+    amount = Number(localStorage.getItem("ddu_donor_amount") || q.get("amount") || 0);
+  } catch (e) {}
+  try { window.dispatchEvent(new CustomEvent("donation-completed", { detail: { first: first, amount: amount } })); } catch (e) {}
+})();
+</script>
 </body>
 </html>

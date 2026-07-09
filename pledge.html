@@ -85,13 +85,35 @@
     check("email", /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email));
     check("postcode", /^(3|8)\d{3}$/.test(pc));
     if (!ok) return;
+
+    var first = name.split(/\s+/)[0] || "Friend";
+    var last = name.split(/\s+/).slice(1).join(" ");
+    // Remember which petition this was, for a later donate/share to attribute to
+    try { localStorage.setItem("ddu_last_petition_url", window.location.href); } catch (err) {}
+    // First-party capture (optional backend — fire-and-forget, never blocks the thank-you)
+    try {
+      var attr = JSON.parse(sessionStorage.getItem("ddu_attr") || "{}");
+      fetch("/api/petition-signup", {
+        method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+        body: JSON.stringify({
+          first_name: first, last_name: last, email: email, postcode: pc,
+          fbclid: attr.fbclid || "", fbp: attr._fbp || "", ref: attr.ref || "",
+          utm_source: attr.utm_source || "", utm_medium: attr.utm_medium || "", utm_campaign: attr.utm_campaign || ""
+        })
+      }).then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { if (d && d.referral_code) { try { localStorage.setItem("ddu_referral_code", d.referral_code); } catch (err) {} } })
+        .catch(function () {});
+    } catch (err) {}
+    // Drive the live activity ticker + browser Pixel dedup hook
+    try { window.dispatchEvent(new CustomEvent("petition-signed", { detail: { first: first } })); } catch (err) {}
+
     document.getElementById("pledgeCard").innerHTML =
       '<div class="success-card">' +
       '<img src="assets/ddu-logo-transparent.png" alt="" style="width:90px; margin:0 auto 16px auto">' +
       '<h2 class="display" style="font-size:30px">You\u2019re number 12,848.</h2>' +
       '<p style="color:var(--ink-soft); margin:12px 0 22px 0">Your pledge has been counted in postcode ' + pc + '. The fastest way to double it:</p>' +
       '<div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap">' +
-      '<a class="btn btn--navy" href="two-victorias.html">Share a Two Victorias card</a>' +
+      '<a class="btn btn--navy" href="share.html">Share &amp; recruit a friend</a>' +
       '<a class="btn btn--ghost" href="your-mp.html">Write to your MP</a></div></div>';
   });
 })();

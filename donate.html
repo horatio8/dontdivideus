@@ -150,9 +150,30 @@
       '<div class="line"><span>Processing fee chip-in</span><span>$' + fee().toFixed(2) + '</span></div>' +
       '<div class="line total"><span>' + (state.freq === "monthly" ? "Monthly total" : "Total") + '</span><span>$' + total() + (state.freq === "monthly" ? "/mo" : "") + '</span></div>';
   }
+  // Base Stripe payment link (swap in the live donate.stripe.com URL).
+  var STRIPE_BASE = document.getElementById("stripeGo").getAttribute("href");
+  // Derive the petition slug the donor came from, so Stripe carries it through
+  // client_reference_id → webhook → share page (unambiguous cross-petition).
+  function petitionSlug() {
+    try {
+      var u = localStorage.getItem("ddu_last_petition_url");
+      if (u) {
+        var f = new URL(u, location.href).pathname.split("/").pop() || "";
+        f = f.replace(/\.html$/, "");
+        if (f && f !== "index") return f;
+      }
+    } catch (e) {}
+    return "pledge";
+  }
+  function appendClientRef(url, slug) {
+    if (!url || !slug) return url;
+    try { var u = new URL(url, location.href); u.searchParams.set("client_reference_id", String(slug)); return u.toString(); }
+    catch (e) { return url; }
+  }
   function paint() {
     ["sum1", "sum2", "sum3"].forEach(function (id) { document.getElementById(id).innerHTML = sumHtml(); });
     document.getElementById("stripeGo").textContent = "Pay $" + total() + (state.freq === "monthly" ? "/month" : "") + " securely with Stripe →";
+    document.getElementById("stripeGo").setAttribute("href", appendClientRef(STRIPE_BASE, petitionSlug()));
   }
 
   card.querySelectorAll("[data-freq]").forEach(function (b) {
@@ -208,7 +229,15 @@
     check("em", /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(document.getElementById("dEm").value.trim()));
     check("pc", /^\d{4}$/.test(document.getElementById("dPc").value.trim()));
     check("att", document.getElementById("dAtt").checked);
-    if (ok) goStep(3);
+    if (ok) {
+      // Stash donor context so the success page can confirm + drive the ticker
+      try {
+        localStorage.setItem("ddu_donor_first", document.getElementById("dFn").value.trim());
+        localStorage.setItem("ddu_donor_amount", String(val()));
+        localStorage.setItem("ddu_donor_freq", state.freq);
+      } catch (e) {}
+      goStep(3);
+    }
   });
 
   paint();

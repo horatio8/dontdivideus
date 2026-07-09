@@ -103,6 +103,7 @@
         '<li><a href="your-mp.html">Find your MP</a></li>' +
         '<li><a href="marginals.html">Marginal seats</a></li>' +
         '<li><a href="resources.html">Resources</a></li>' +
+        '<li><a href="share.html">Share the campaign</a></li>' +
       '</ul></div>' +
       '<div><h4>About</h4><ul>' +
         '<li><a href="about.html">Who we are</a></li>' +
@@ -170,4 +171,145 @@
       form.innerHTML = '<span style="color:#e3d3a6;font-weight:700">Thanks — check your inbox to confirm.</span>';
     });
   });
+})();
+
+/* ============================================================
+   First-party attribution capture + Share Click beacon
+   Runs on every page. First-touch values win and are never
+   overwritten. All network calls are fire-and-forget: if the
+   /api backend isn't deployed yet, nothing breaks.
+   ============================================================ */
+(function () {
+  var KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term",
+    "fbclid", "gclid", "ttclid", "li_fat_id", "msclkid", "twclid", "sccid",
+    "ad_id", "adset_id", "campaign_id", "placement", "ref"];
+  try {
+    var params = new URLSearchParams(window.location.search);
+    var store = JSON.parse(sessionStorage.getItem("ddu_attr") || "{}");
+    var touched = false;
+    KEYS.forEach(function (k) {
+      var v = params.get(k);
+      if (v && !store[k]) { store[k] = v; touched = true; }
+    });
+    if (!store.landing_url) {
+      store.landing_url = window.location.href;
+      store.landing_referrer = document.referrer || "";
+      store.landing_at = new Date().toISOString();
+      touched = true;
+    }
+    if (!store._fbp) {
+      var m = document.cookie.match(/(?:^|;\s*)_fbp=([^;]+)/);
+      if (m) { store._fbp = m[1]; touched = true; }
+    }
+    if (touched) sessionStorage.setItem("ddu_attr", JSON.stringify(store));
+
+    // Share Click beacon — once per ref per session
+    var ref = params.get("ref") || store.ref;
+    if (ref) {
+      var flag = "ddu_ref_click_" + ref;
+      if (!sessionStorage.getItem(flag)) {
+        sessionStorage.setItem(flag, "1");
+        try {
+          fetch("/api/share-click", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ref: ref, source_url: window.location.href, fbclid: store.fbclid || "" }),
+            keepalive: true
+          }).catch(function () {});
+        } catch (e) {}
+      }
+    }
+  } catch (e) {}
+})();
+
+/* ============================================================
+   Social-proof activity popup
+   Bottom-right "someone just signed / donated" toast. Hidden on
+   conversion pages. Listens for real petition-signed /
+   donation-completed CustomEvents, with a curated idle fallback
+   pool (representative sample copy — never stored signer data).
+   ============================================================ */
+(function () {
+  var path = window.location.pathname;
+  var base = (path.substring(path.lastIndexOf("/") + 1) || "index.html").replace(/[?#].*$/, "");
+  // Suppress on conversion surfaces (donate flow, share, the petition itself)
+  if (/^(donate|donate-success|donate-cancelled|share|pledge|petition)(\.html)?$/.test(base)) return;
+
+  var NAMES = ["Sarah", "James", "Emma", "Liam", "Olivia", "Noah", "Ava", "Jack",
+    "Chloe", "Thomas", "Grace", "Lachlan", "Ruby", "Ethan", "Isla", "Oliver",
+    "Mia", "William", "Sophie", "Harry", "Charlotte", "Cooper", "Zoe", "Amelia",
+    "Riley", "Ella", "Max", "Lily", "George", "Evie"];
+  var PLACES = ["Melbourne", "Geelong", "Ballarat", "Bendigo", "Shepparton",
+    "Frankston", "Dandenong", "Werribee", "Mildura", "Warrnambool", "Wodonga",
+    "Traralgon", "Cranbourne", "Pakenham", "Sunbury", "Melton", "Wangaratta",
+    "Horsham", "Sale", "Bairnsdale"];
+  var AMOUNTS = [50, 75, 100, 150, 200];
+
+  function rnd(a) { return a[Math.floor(Math.random() * a.length)]; }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function petitionItem(name) {
+    return { type: "petition", text: name + " from " + rnd(PLACES) + " just signed the pledge for one Victoria.", cta: "Add your name", href: "pledge.html" };
+  }
+  function donationItem(name, amount) {
+    return { type: "donation", text: name + " from " + rnd(PLACES) + " just chipped in $" + amount + " to keep Victoria equal.", cta: "Chip in today", href: "donate.html" };
+  }
+  function idleItem() {
+    return Math.random() < 0.75 ? petitionItem(rnd(NAMES)) : donationItem(rnd(NAMES), rnd(AMOUNTS));
+  }
+
+  var current = null, hideTimer = null;
+
+  function clear() {
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+    if (current && current.parentNode) current.parentNode.removeChild(current);
+    current = null;
+  }
+  function dismiss() {
+    if (!current) return;
+    var el = current; current = null;
+    if (hideTimer) { clearTimeout(hideTimer); hideTimer = null; }
+    el.classList.remove("ddu-sp--in");
+    el.classList.add("ddu-sp--out");
+    setTimeout(function () { if (el && el.parentNode) el.parentNode.removeChild(el); }, 400);
+  }
+  function show(item) {
+    clear(); // a new item replaces whatever is showing — no backlog
+    var a = document.createElement("a");
+    a.href = item.href;
+    a.className = "ddu-sp ddu-sp--" + item.type;
+    a.setAttribute("role", "status");
+    var icon = item.type === "petition" ? "✓" : "❤";
+    a.innerHTML =
+      '<span class="ddu-sp__icon" aria-hidden="true">' + icon + "</span>" +
+      '<span class="ddu-sp__body"><span class="ddu-sp__text">' + esc(item.text) + "</span>" +
+      '<span class="ddu-sp__cta">' + esc(item.cta) + "</span></span>" +
+      '<button class="ddu-sp__close" type="button" aria-label="Dismiss">×</button>';
+    a.querySelector(".ddu-sp__close").addEventListener("click", function (e) {
+      e.preventDefault(); e.stopPropagation(); dismiss();
+    });
+    document.body.appendChild(a);
+    current = a;
+    requestAnimationFrame(function () { if (current === a) a.classList.add("ddu-sp--in"); });
+    hideTimer = setTimeout(dismiss, 9000);
+  }
+
+  // Real form-success events (fired by petition / donation success handlers)
+  window.addEventListener("petition-signed", function (e) {
+    var first = (e.detail && e.detail.first) ? e.detail.first : rnd(NAMES);
+    show(petitionItem(first));
+  });
+  window.addEventListener("donation-completed", function (e) {
+    var amt = e.detail && Number(e.detail.amount);
+    if (!(amt >= 50)) return; // only surface meaningful gifts
+    var first = (e.detail && e.detail.first) ? e.detail.first : rnd(NAMES);
+    show(donationItem(first, amt));
+  });
+
+  // Idle cadence: first after ~8s, then one/min, only while tab is visible
+  function tick() { if (!document.hidden) show(idleItem()); }
+  setTimeout(function () { tick(); setInterval(tick, 60000); }, 8000);
 })();
