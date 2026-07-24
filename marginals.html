@@ -171,6 +171,23 @@
   });
   document.getElementById("volForm").addEventListener("submit", function (e) {
     e.preventDefault();
+    var name = document.getElementById("vName").value.trim();
+    var email = document.getElementById("vEmail").value.trim();
+    var pc = document.getElementById("vPc").value.trim();
+    try {
+      fetch("/api/event-log", {
+        method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+        body: JSON.stringify({
+          event_type: "Volunteer Signup",
+          first_name: name.split(/\s+/)[0] || "", last_name: name.split(/\s+/).slice(1).join(" "),
+          email: email, postcode: pc, source_channel: "Website",
+          payload: {
+            name: name, email: email, postcode: pc,
+            seat: document.getElementById("vSeat").value || "Own electorate (matched from postcode)"
+          }
+        })
+      }).catch(function () {});
+    } catch (err) {}
     this.innerHTML = '<div style="text-align:center; padding:20px 0"><strong style="font-size:18px">You\u2019re in.</strong><p style="color:var(--ink-soft); font-size:14.5px; margin:8px 0 0 0">An organiser will be in touch within a week with actions in your seat.</p></div>';
   });
 })();

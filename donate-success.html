@@ -67,6 +67,14 @@
     amount = Number(localStorage.getItem("ddu_donor_amount") || q.get("amount") || 0);
   } catch (e) {}
   try { window.dispatchEvent(new CustomEvent("donation-completed", { detail: { first: first, amount: amount } })); } catch (e) {}
+  // Carry the Stripe session id through to /share so the donor is recognised
+  // there without re-entering their details.
+  try {
+    var cs = q.get("cs") || q.get("session_id");
+    if (cs) document.querySelectorAll('a[href="share.html"]').forEach(function (a) {
+      a.href = "share.html?cs=" + encodeURIComponent(cs);
+    });
+  } catch (e) {}
 })();
 </script>
 </body>

@@ -12,6 +12,12 @@
     })(window, document, "clarity", "script", "xl53e8cnjm");
 </script>
 <title>Don't Divide Us — One Victoria, equal before the law</title>
+<meta name="description" content="The Statewide Treaty Act 2025 creates two classes of Victorian citizen. Sign the pledge to repeal it at the November 2026 state election.">
+<meta property="og:title" content="Don't Divide Us — One Victoria, equal before the law">
+<meta property="og:description" content="The Statewide Treaty Act 2025 creates two classes of Victorian citizen. Sign the pledge to repeal it at the November 2026 state election.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://dontdivideus.vercel.app/assets/parliament-duotone.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/ddu-logo-transparent.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
@@ -269,6 +275,11 @@
     var customInput = document.getElementById("customAmt");
     function update() {
       var val = amt === "custom" ? (parseFloat(customInput.value) || 0) : amt;
+      if (!(val >= 2)) {
+        go.textContent = "Donate →";
+        go.href = "donate.html?freq=" + freq;
+        return;
+      }
       var fee = w.querySelector("[data-feechip]").checked ? Math.round(val * 3) / 100 : 0;
       var total = (val + fee).toFixed(2).replace(/\.00$/, "");
       go.textContent = "Donate $" + total + (freq === "monthly" ? "/month" : "") + " →";

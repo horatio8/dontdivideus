@@ -47,9 +47,9 @@
         <p class="pledge-text">We demand Victoria's leaders <strong>repeal the Statewide Treaty Act 2025</strong>.</p>
         <p class="pledge-text">This Act is a profound betrayal of the principles of equality and democracy. It lacks a clear public mandate, and its cost will burden all Victorians.</p>
         <p class="pledge-text">We reject any legislation that divides our community by creating a two-tiered society — and we commit our votes, our voices and our networks to restoring one Victoria, where every citizen stands equal before the law.</p>
-        <div class="signers">
-          <span class="n">12,847</span>
-          <span>Victorians have signed<br>· counter placeholder, fed by CRM</span>
+        <div class="signers" id="signersBlock" style="visibility:hidden">
+          <span class="n" id="signCount">—</span>
+          <span>Victorians have signed</span>
         </div>
         <p class="source-links" style="margin-top:18px">Pledge wording adapted from the campaign petition. Your details are handled under our <a href="privacy.html">privacy policy</a> and never sold.</p>
       </div>
@@ -78,6 +78,22 @@
 <script>
 (function () {
   var form = document.getElementById("pledgeForm");
+
+  // Live signature count from Airtable; the block stays hidden until a real
+  // number arrives so no placeholder figure is ever shown.
+  var liveCount = null;
+  try {
+    fetch("/api/petition-count")
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (d && typeof d.count === "number") {
+          liveCount = d.count;
+          document.getElementById("signCount").textContent = d.count.toLocaleString();
+          document.getElementById("signersBlock").style.visibility = "visible";
+        }
+      }).catch(function () {});
+  } catch (e) {}
+
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var ok = true;
@@ -105,6 +121,10 @@
         method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
         body: JSON.stringify({
           first_name: first, last_name: last, email: email, postcode: pc,
+          mobile: document.getElementById("pMob").value.trim(),
+          consent: document.getElementById("cEmail").checked,
+          consent_email: document.getElementById("cEmail").checked,
+          consent_sms: document.getElementById("cSms").checked,
           fbclid: attr.fbclid || "", fbp: attr._fbp || "", ref: attr.ref || "",
           utm_source: attr.utm_source || "", utm_medium: attr.utm_medium || "", utm_campaign: attr.utm_campaign || ""
         })
@@ -118,7 +138,9 @@
     document.getElementById("pledgeCard").innerHTML =
       '<div class="success-card">' +
       '<img src="assets/ddu-logo-transparent.png" alt="" style="width:90px; margin:0 auto 16px auto">' +
-      '<h2 class="display" style="font-size:30px">You\u2019re number 12,848.</h2>' +
+      '<h2 class="display" style="font-size:30px">' +
+      (liveCount !== null ? 'You\u2019re number ' + (liveCount + 1).toLocaleString() + '.' : 'Your pledge is counted.') +
+      '</h2>' +
       '<p style="color:var(--ink-soft); margin:12px 0 22px 0">Your pledge has been counted in postcode ' + pc + '. The fastest way to double it:</p>' +
       '<div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap">' +
       '<a class="btn btn--navy" href="share.html">Share &amp; recruit a friend</a>' +

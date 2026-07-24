@@ -112,25 +112,18 @@
 <script>
 (function () {
   var PROD_ORIGIN = location.origin.indexOf("http") === 0 ? location.origin : "https://dontdivideus.vercel.app";
-  var SIGNATURE_COUNT = 12847; // {{count}} — operator-editable; feeds share copy
-  var ALPHABET = "23456789ABCDEFGHJKMNPQRSTUVWXYZ"; // Crockford, no 0/O/1/I/L
+  var SIGNATURE_COUNT = null; // live from /api/petition-count; share copy adapts
 
+  var currentState = "";
   function states() { return document.querySelectorAll(".share-state"); }
   function setState(name) {
+    currentState = name;
     states().forEach(function (s) { s.classList.toggle("on", s.getAttribute("data-state") === name); });
   }
-  function genCode(n) {
-    n = n || 6; var out = "";
-    var arr = new Uint8Array(n);
-    (window.crypto || window.msCrypto).getRandomValues(arr);
-    for (var i = 0; i < n; i++) out += ALPHABET[arr[i] % ALPHABET.length];
-    return out;
-  }
+  // Codes are only ever server-issued (via pledge signup, share-signup or
+  // share-context); a locally invented code would be unattributable.
   function getCode() {
-    var c = "";
-    try { c = localStorage.getItem("ddu_referral_code") || ""; } catch (e) {}
-    if (!c) { c = genCode(6); try { localStorage.setItem("ddu_referral_code", c); } catch (e) {} }
-    return c;
+    try { return localStorage.getItem("ddu_referral_code") || ""; } catch (e) { return ""; }
   }
   function petitionSlug() {
     try {
@@ -139,17 +132,20 @@
     } catch (e) {}
     return "pledge.html";
   }
-  function shareUrl(code) { return PROD_ORIGIN + "/" + petitionSlug() + "?ref=" + code; }
+  function shareUrl(code) { return PROD_ORIGIN + "/" + petitionSlug() + (code ? "?ref=" + code : ""); }
 
-  var SHARE_TEXT = "Victorians never voted to be divided by law. " + SIGNATURE_COUNT.toLocaleString() +
-    " of us have signed to repeal the Statewide Treaty Act 2025 — add your name:";
+  function SHARE_TEXT() {
+    return "Victorians never voted to be divided by law. " +
+      (SIGNATURE_COUNT ? SIGNATURE_COUNT.toLocaleString() + " of us have signed to repeal the Statewide Treaty Act 2025 — add your name:"
+        : "Sign to repeal the Statewide Treaty Act 2025 — add your name:");
+  }
 
   var PLATFORMS = [
     { key: "facebook", cls: "sb-fb", ic: "f", label: "Share on Facebook", url: function (u) { return "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(u); } },
-    { key: "x", cls: "sb-x", ic: "𝕏", label: "Share on X", url: function (u) { return "https://twitter.com/intent/tweet?text=" + encodeURIComponent(SHARE_TEXT + " " + u); } },
+    { key: "x", cls: "sb-x", ic: "𝕏", label: "Share on X", url: function (u) { return "https://twitter.com/intent/tweet?text=" + encodeURIComponent(SHARE_TEXT() + " " + u); } },
     { key: "linkedin", cls: "sb-li", ic: "in", label: "Share on LinkedIn", url: function (u) { return "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(u); } },
-    { key: "whatsapp", cls: "sb-wa", ic: "✆", label: "Share on WhatsApp", url: function (u) { return "https://wa.me/?text=" + encodeURIComponent(SHARE_TEXT + " " + u); } },
-    { key: "email", cls: "sb-em", ic: "✉", label: "Share by email", url: function (u) { return "mailto:?subject=" + encodeURIComponent("Stand up for one Victoria") + "&body=" + encodeURIComponent(SHARE_TEXT + "\n\n" + u); } },
+    { key: "whatsapp", cls: "sb-wa", ic: "✆", label: "Share on WhatsApp", url: function (u) { return "https://wa.me/?text=" + encodeURIComponent(SHARE_TEXT() + " " + u); } },
+    { key: "email", cls: "sb-em", ic: "✉", label: "Share by email", url: function (u) { return "mailto:?subject=" + encodeURIComponent("Stand up for one Victoria") + "&body=" + encodeURIComponent(SHARE_TEXT() + "\n\n" + u); } },
     { key: "copy", cls: "sb-cp", ic: "⧉", label: "Copy link", url: null }
   ];
 
@@ -183,7 +179,7 @@
       else { el.type = "button"; }
       el.innerHTML = '<span class="ic" aria-hidden="true">' + p.ic + "</span>" + p.label;
       el.addEventListener("click", function (e) {
-        issue(code, p.key, url);
+        if (code) issue(code, p.key, url);
         markUsed(p.key);
         el.classList.add("used");
         if (!p.url) { e.preventDefault(); copy(url, el); }
@@ -194,10 +190,11 @@
   }
 
   function copy(text, btn) {
-    var old = btn ? btn.textContent : "";
-    function done() { if (btn) { btn.textContent = "Copied ✓"; setTimeout(function () { btn.innerHTML = '<span class="ic" aria-hidden="true">⧉</span>Copy link'; }, 1600); } }
-    if (navigator.clipboard) { navigator.clipboard.writeText(text).then(done, function () {}); }
-    else { var t = document.getElementById("refUrl"); t.select(); try { document.execCommand("copy"); done(); } catch (e) {} }
+    var oldHtml = btn ? btn.innerHTML : "";
+    function done() { if (btn) { btn.textContent = "Copied ✓"; setTimeout(function () { btn.innerHTML = oldHtml; }, 1600); } }
+    function fallback() { var t = document.getElementById("refUrl"); t.select(); try { document.execCommand("copy"); done(); } catch (e) {} }
+    if (navigator.clipboard) { navigator.clipboard.writeText(text).then(done, fallback); }
+    else { fallback(); }
   }
   document.getElementById("copyMain").addEventListener("click", function () { copy(document.getElementById("refUrl").value, this); });
 
@@ -212,7 +209,8 @@
     check("em", /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(document.getElementById("aEm").value.trim()));
     if (!ok) return;
     try { localStorage.setItem("ddu_donor_first", fn); } catch (err) {}
-    // Optional backend: mint the code server-side; fall back to a local code.
+    // Mint the code server-side; the page renders immediately without a ref
+    // and re-renders with the personal link once the code arrives.
     try {
       fetch("/api/share-signup", {
         method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
@@ -225,9 +223,20 @@
         .then(function (d) { if (d && d.referral_code) { try { localStorage.setItem("ddu_referral_code", d.referral_code); } catch (err) {} } renderReady(); })
         .catch(function () { renderReady(); });
     } catch (err) { renderReady(); }
-    // Render immediately with a local code; a server code (if any) refreshes on next load.
     renderReady();
   });
+
+  // Live signature count feeds the share copy; rebuild links when it lands.
+  try {
+    fetch("/api/petition-count")
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (d && typeof d.count === "number" && d.count > 0) {
+          SIGNATURE_COUNT = d.count;
+          if (currentState === "ready") renderReady();
+        }
+      }).catch(function () {});
+  } catch (e) {}
 
   // Personalise the header if we know who this is
   try {

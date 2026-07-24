@@ -54,9 +54,13 @@ module.exports = async function (req, res) {
     metadata: {
       org: "dontdivideus", frequency: monthly ? "monthly" : "oneoff",
       content_name: body.content_name || "donation", source_url: body.source_url || "",
-      ref: body.ref || "", contact_id: body.contact_id || "", sms_variant: body.sms_variant || ""
+      ref: body.ref || "", contact_id: body.contact_id || "", sms_variant: body.sms_variant || "",
+      petition_slug: body.slug || "pledge", fbclid: body.fbclid || "", fbp: body.fbp || ""
     }
   };
+  // Invoices don't inherit session metadata; copying it onto the subscription
+  // makes it reachable via invoice.subscription_details.metadata in the webhook.
+  if (monthly) params.subscription_data = { metadata: params.metadata };
   if (body.email) params.customer_email = body.email;
   try {
     var s2 = await U.stripePost("checkout/sessions", params);

@@ -73,6 +73,23 @@
   });
   document.getElementById("contactForm").addEventListener("submit", function (e) {
     e.preventDefault();
+    var name = document.getElementById("cName").value.trim();
+    var email = document.getElementById("cEmail").value.trim();
+    try {
+      fetch("/api/event-log", {
+        method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+        body: JSON.stringify({
+          event_type: "Contact Message",
+          first_name: name.split(/\s+/)[0] || "", last_name: name.split(/\s+/).slice(1).join(" "),
+          email: email, source_channel: "Website",
+          payload: {
+            name: name, email: email,
+            topic: document.getElementById("cTopic").value,
+            message: document.getElementById("cMsg").value.trim()
+          }
+        })
+      }).catch(function () {});
+    } catch (err) {}
     this.innerHTML = '<div style="text-align:center; padding:24px 0"><strong style="font-size:18px">Message sent.</strong><p style="font-size:14.5px; color:var(--ink-soft); margin:8px 0 0 0">You\u2019ll get an acknowledgement by email shortly.</p></div>';
   });
 </script>

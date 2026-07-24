@@ -248,6 +248,42 @@
     }
   });
 
+  // Dynamic Stripe Checkout via the backend (amount, frequency and email all
+  // carried through). Falls back to the static payment link only when the
+  // backend reports it is not configured.
+  var goBtn = document.getElementById("stripeGo");
+  goBtn.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (goBtn.getAttribute("data-busy")) return;
+    goBtn.setAttribute("data-busy", "1");
+    var label = goBtn.textContent;
+    goBtn.textContent = "Opening secure checkout…";
+    var attr = {};
+    try { attr = JSON.parse(sessionStorage.getItem("ddu_attr") || "{}"); } catch (err) {}
+    function fallback() {
+      goBtn.removeAttribute("data-busy");
+      goBtn.textContent = label;
+      window.open(appendClientRef(STRIPE_BASE, petitionSlug()), "_blank", "noopener");
+    }
+    try {
+      fetch("/api/checkout", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: val() + fee(),
+          frequency: state.freq === "monthly" ? "monthly" : "oneoff",
+          email: document.getElementById("dEm").value.trim(),
+          slug: petitionSlug(),
+          content_name: "donation",
+          source_url: location.href,
+          ref: attr.ref || "",
+          fbclid: attr.fbclid || "", fbp: attr._fbp || ""
+        })
+      }).then(function (r) { return r.json(); })
+        .then(function (d) { if (d && d.url) { location.href = d.url; } else { fallback(); } })
+        .catch(fallback);
+    } catch (err) { fallback(); }
+  });
+
   paint();
 })();
 </script>

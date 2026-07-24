@@ -29,7 +29,7 @@ async function at(method, table, opts) {
   if (!r.ok) { var e = new Error("airtable " + r.status + ": " + JSON.stringify(j)); e.status = r.status; throw e; }
   return j;
 }
-function esc(s) { return String(s == null ? "" : s).replace(/'/g, "\\'"); }
+function esc(s) { return String(s == null ? "" : s).replace(/\\/g, "\\\\").replace(/'/g, "\\'"); }
 async function findOne(table, formula) {
   var j = await at("GET", table, { query: "maxRecords=1&filterByFormula=" + encodeURIComponent(formula) });
   return (j.records && j.records[0]) || null;

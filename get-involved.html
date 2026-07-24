@@ -88,17 +88,17 @@
           <div class="card event">
             <div class="dt"><div class="d">18</div><div class="m">Jun</div></div>
             <div><h4>Equal Before the Law — town hall, Glen Waverley</h4><p>Wheelers Hill Community Centre · 7:00pm · Q&amp;A with campaign spokespeople</p></div>
-            <a class="btn btn--ghost btn--sm" style="margin-left:auto" href="#" onclick="this.textContent='RSVP\u2019d \u2713'; return false;">RSVP</a>
+            <a class="btn btn--ghost btn--sm" style="margin-left:auto" href="#" data-rsvp="Town hall — Glen Waverley, 18 Jun">RSVP</a>
           </div>
           <div class="card event">
             <div class="dt"><div class="d">27</div><div class="m">Jun</div></div>
             <div><h4>Street stall &amp; pledge drive, Pakenham Market</h4><p>Main St Pakenham · 9:00am–1:00pm · materials provided</p></div>
-            <a class="btn btn--ghost btn--sm" style="margin-left:auto" href="#" onclick="this.textContent='RSVP\u2019d \u2713'; return false;">RSVP</a>
+            <a class="btn btn--ghost btn--sm" style="margin-left:auto" href="#" data-rsvp="Street stall — Pakenham Market, 27 Jun">RSVP</a>
           </div>
           <div class="card event">
             <div class="dt"><div class="d">09</div><div class="m">Jul</div></div>
             <div><h4>Volunteer training night (online)</h4><p>Zoom · 6:30pm · how to run a pledge conversation</p></div>
-            <a class="btn btn--ghost btn--sm" style="margin-left:auto" href="#" onclick="this.textContent='RSVP\u2019d \u2713'; return false;">RSVP</a>
+            <a class="btn btn--ghost btn--sm" style="margin-left:auto" href="#" data-rsvp="Volunteer training night (online), 9 Jul">RSVP</a>
           </div>
         </div>
         <p class="source-links" style="margin-top:14px">List + map view in production, fed from the CRM events module.</p>
@@ -152,7 +152,44 @@
 <script>
   document.getElementById("hostForm").addEventListener("submit", function (e) {
     e.preventDefault();
+    var name = document.getElementById("hName").value.trim();
+    var email = document.getElementById("hEmail").value.trim();
+    try {
+      fetch("/api/event-log", {
+        method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+        body: JSON.stringify({
+          event_type: "Host Event Offer",
+          first_name: name.split(/\s+/)[0] || "", last_name: name.split(/\s+/).slice(1).join(" "),
+          email: email, source_channel: "Website",
+          payload: {
+            name: name, email: email,
+            event_type: document.getElementById("hType").value,
+            suburb: document.getElementById("hSuburb").value.trim(),
+            proposed_date: document.getElementById("hDate").value.trim()
+          }
+        })
+      }).catch(function () {});
+    } catch (err) {}
     this.innerHTML = '<div style="text-align:center; padding:18px 0"><strong style="font-size:17px">Submitted for review.</strong><p style="font-size:14.5px; color:var(--ink-soft); margin:8px 0 0 0">We aim to approve listings within 3 business days and will email you a host kit.</p></div>';
+  });
+
+  // RSVP beacons — logged as contactless events in the CRM.
+  document.querySelectorAll("[data-rsvp]").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (a.getAttribute("data-done")) return;
+      a.setAttribute("data-done", "1");
+      a.textContent = "RSVP’d ✓";
+      try {
+        fetch("/api/event-log", {
+          method: "POST", headers: { "Content-Type": "application/json" }, keepalive: true,
+          body: JSON.stringify({
+            event_type: "Event RSVP", source_channel: "Website",
+            payload: { event: a.getAttribute("data-rsvp") }
+          })
+        }).catch(function () {});
+      } catch (err) {}
+    });
   });
 </script>
 </body>

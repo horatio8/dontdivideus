@@ -134,7 +134,7 @@
     document.getElementById("rMargin").textContent = s.margin.toFixed(1) + "%";
     document.getElementById("rPledges").textContent = s.pledges;
     setTpl("one");
-    document.getElementById("mpCard").scrollTop;
+    document.getElementById("mpCard").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
   function setTpl(k) {
@@ -152,9 +152,11 @@
   });
   document.getElementById("tplBox").addEventListener("input", updateMailto);
   document.getElementById("copyBtn").addEventListener("click", function () {
-    if (navigator.clipboard) navigator.clipboard.writeText(document.getElementById("tplBox").value);
-    this.textContent = "Copied ✓";
-    var b = this; setTimeout(function () { b.textContent = "Copy text"; }, 1600);
+    var b = this, txt = document.getElementById("tplBox").value;
+    function done() { b.textContent = "Copied ✓"; setTimeout(function () { b.textContent = "Copy text"; }, 1600); }
+    function fallback() { var t = document.getElementById("tplBox"); t.select(); try { document.execCommand("copy"); done(); } catch (e) {} }
+    if (navigator.clipboard) navigator.clipboard.writeText(txt).then(done, fallback);
+    else fallback();
   });
 })();
 </script>

@@ -123,9 +123,10 @@
 <script src="js/site.js"></script>
 <script>
   document.querySelectorAll("[data-dl]").forEach(function (b) {
+    var orig = b.textContent;
     b.addEventListener("click", function () {
       b.textContent = "Download started ✓";
-      setTimeout(function () { b.textContent = b.textContent.replace(" started ✓", ""); }, 2200);
+      setTimeout(function () { b.textContent = orig; }, 2200);
     });
   });
   document.getElementById("yardBtn").addEventListener("click", function () {
